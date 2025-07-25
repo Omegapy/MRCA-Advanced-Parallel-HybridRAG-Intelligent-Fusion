@@ -99,7 +99,7 @@ This approach provides:
 
 ## **Core Tools**
 
-### **🔍 VectorRAG Tool**
+### **VectorRAG Tool**
 
 #### **`vector.py`** (654 lines)
 Advanced semantic search implementation for mining regulatory content:
@@ -148,7 +148,7 @@ results = await execute_vector_search(
 # - Embedding similarity scores
 ```
 
-### **🕸️ GraphRAG Tool**
+### **GraphRAG Tool**
 
 #### **`cypher.py`** (523 lines)
 Knowledge graph traversal and relationship analysis for regulatory queries:
@@ -197,7 +197,7 @@ results = await execute_graph_search(
 # - Cross-references
 ```
 
-### **🛠️ General Query Tool**
+### **General Query Tool**
 
 #### **`general.py`** (677 lines)
 Fallback query processing and multi-source integration for comprehensive responses:
@@ -565,7 +565,7 @@ async def example_tool_fusion():
 
 ## **Performance Optimization**
 
-### **⚡ Optimization Strategies**
+### **Optimization Strategies**
 
 #### **Caching**
 ```python
@@ -840,9 +840,6 @@ def get_tool(tool_name: str, config: Dict):
 ```
 
 ---
-
-**MRCA Backend Tools provide the specialized retrieval capabilities powering 
-the Advanced Parallel HybridRAG - Intelligent Fusion technology for intelligent mining regulatory compliance assistance.**
 
 © 2025 Alexander Samuel Ricciardi - MRCA Backend Tools Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System 
