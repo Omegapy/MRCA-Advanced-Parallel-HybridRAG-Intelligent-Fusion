@@ -1,4 +1,4 @@
-# MRCA - Mining Regulatory Compliance Assistant - Advanced Parallel Hybrid technology - Intelligent Fusion
+# MRCA - Mining Regulatory Compliance Assistant - Advanced Parallel Hybrid - Intelligent Fusion Technology
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
@@ -7,7 +7,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
 
-**An AI-powered regulatory compliance assistant providing mining safety guidance through.  
+**An AI-powered regulatory compliance assistant providing mining safety guidance. 
 The system uses a novel RAG system - Advanced Parallel HybridRAG - Intelligent Fusion.**
 
 For more project documentation see the `Documents` folder.
