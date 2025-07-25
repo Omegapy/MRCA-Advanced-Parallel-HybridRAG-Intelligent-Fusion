@@ -100,7 +100,7 @@ This approach combines:
 
 ### **Core API Module**
 
-#### **`main.py`** (591 lines)
+#### **`main.py`**  
 Central FastAPI orchestration layer:
 - **API Endpoints**: RESTful endpoints for frontend communication
 - **Request/Response Models**: Pydantic models for data validation
@@ -118,7 +118,7 @@ GET  /                          # Service information
 
 ### **Advanced Parallel Hybrid Engine**
 
-#### **`parallel_hybrid.py`** (807 lines)
+#### **`parallel_hybrid.py`**  
 Core parallel processing implementation:
 - **Async Coordination**: Manages simultaneous VectorRAG and GraphRAG execution
 - **Performance Monitoring**: Real-time metrics collection and analysis
@@ -132,7 +132,7 @@ async def execute_parallel_search(vector_task, graph_task)
 async def monitor_performance(start_time, components)
 ```
 
-#### **`context_fusion.py`** (919 lines)
+#### **`context_fusion.py`**   
 Intelligent context fusion implementation:
 - **4 Fusion Strategies**: Research-based algorithms for combining results
 - **Quality Analysis**: Automated assessment of fusion effectiveness
@@ -148,7 +148,7 @@ class FusionStrategy(Enum):
     ADAPTIVE_FUSION = "adaptive_fusion"      # Dynamic strategy selection
 ```
 
-#### **`hybrid_templates.py`** (890 lines)
+#### **`hybrid_templates.py`**   
 Specialized response template system:
 - **5 Template Types**: Different response formats for various use cases
 - **Dynamic Generation**: AI-powered template selection and customization
@@ -167,28 +167,28 @@ class TemplateType(Enum):
 
 ### **Infrastructure Components**
 
-#### **`config.py`** (510 lines)
+#### **`config.py`**   
 Comprehensive configuration management:
 - **Environment Variables**: Secure configuration loading
 - **API Key Management**: OpenAI, Gemini, Neo4j credential handling
 - **Settings Validation**: Pydantic-based configuration validation
 - **Secrets Integration**: Automatic `.streamlit/secrets.toml` loading
 
-#### **`database.py`** (686 lines)
+#### **`database.py`**   
 Neo4j database integration:
 - **Connection Management**: Robust database connection handling
 - **Vector Search**: High-performance vector similarity search
 - **Graph Queries**: Cypher query execution and optimization
 - **Health Monitoring**: Database connectivity and performance monitoring
 
-#### **`llm.py`** (376 lines)
+#### **`llm.py`**   
 LLM integration and management:
 - **Multi-Provider Support**: OpenAI GPT-4o + Google Gemini integration
 - **Prompt Engineering**: Optimized prompts for regulatory compliance
 - **Rate Limiting**: API quota management and throttling
 - **Error Handling**: Graceful LLM service failure recovery
 
-#### **`circuit_breaker.py`** (749 lines)
+#### **`circuit_breaker.py`**   
 Advanced fault tolerance system:
 - **Circuit Breaker Pattern**: Prevents cascading failures
 - **Health Monitoring**: Component-level health tracking
@@ -202,24 +202,24 @@ Utility functions and helpers:
 - **Logging**: Structured logging and error reporting
 - **Performance**: Caching and optimization utilities
 
-### **🔧 Agent Tools Package**
+### **Agent Tools Package**
 
 #### **`tools/`** Directory
 Specialized tools for knowledge graph querying:
 
-**`tools/vector.py`** (654 lines):
+**`tools/vector.py`**   
 - **VectorRAG Implementation**: Semantic similarity search
 - **Embedding Generation**: Google Gemini embedding integration
 - **Performance Optimization**: Efficient vector operations
 - **Quality Assessment**: Relevance scoring and filtering
 
-**`tools/cypher.py`** (523 lines):
+**`tools/cypher.py`**   
 - **GraphRAG Implementation**: Knowledge graph traversal
 - **Cypher Generation**: Automated query generation from natural language
 - **Relationship Analysis**: Entity relationship exploration
 - **Performance Monitoring**: Query optimization and caching
 
-**`tools/general.py`** (677 lines):
+**`tools/general.py`**   
 - **General Query Processing**: Fallback query handling
 - **Multi-Source Integration**: Combines multiple data sources
 - **Quality Control**: Response validation and enhancement
@@ -227,14 +227,14 @@ Specialized tools for knowledge graph querying:
 
 ### **Production Components**
 
-#### **`Dockerfile.backend`** (221 lines)
+#### **`Dockerfile.backend`**   
 Production-ready containerization:
 - **Multi-stage Build**: Optimized for production deployment
 - **Security**: Non-root user execution and security hardening
 - **Health Checks**: Container-level health monitoring
 - **Performance**: Optimized for high-throughput processing
 
-#### **`requirements.txt`** (30 lines)
+#### **`requirements.txt`**   
 Comprehensive dependency management:
 ```txt
 fastapi>=0.104.0           # Core API framework
@@ -321,7 +321,7 @@ Comprehensive system health check:
 
 ## **Configuration**
 
-### **🔧 Environment Variables**
+### **Environment Variables**
 
 #### **Required Configuration**
 ```bash
@@ -434,7 +434,7 @@ uvicorn main:app --reload
 
 ## **Performance Metrics**
 
-### **⚡ System Capabilities**
+### **System Capabilities**
 
 #### **Processing Performance**
 - **Average Response Time**: 30-45 seconds (comprehensive analysis)
@@ -708,9 +708,6 @@ uvicorn main:app \
 - **Quality Metrics**: Enhanced response quality assessment algorithms
 
 ---
-
-**MRCA Backend provides the core Advanced Parallel HybridRAG - Intelligent Fusion technology 
-powering intelligent mining regulatory compliance assistance.**
 
 © 2025 Alexander Samuel Ricciardi - MRCA Backend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System 
