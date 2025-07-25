@@ -6,20 +6,29 @@
 
 **Data Pipeline and Knowledge Base Construction for Advanced Parallel HybridRAG - Intelligent Fusion Technology**
 
-**Automated scripts for downloading CFR documents, building knowledge graphs, 
-and creating the hybrid vector/graph store that powers MRCA's Advanced Parallel HybridRAG - Intelligent Fusion system.**
+Automated scripts for downloading CFR documents, building knowledge graphs, 
+and creating the hybrid vector/graph store that powers MRCA's Advanced Parallel HybridRAG - Intelligent Fusion system.
 
-© 2025 Alexander Samuel Ricciardi - MRCA Build Data Module  
+For more project documentation see the `Documents` folder.
+
+---
+
+© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
 
 ---
 
-Author:  
-Alexander Ricciardi  
-Colorado State University Global  
-CSC480: Capstone Computer Science  
-Dr. Shaher Daoud  
-Spring-D Semester June-August 2025  
+Author: Alexander Ricciardi  
+Date: 07/25/2025
+
+This project was part of my capstone project at CSU Global.
+
+---
+
+MRCA Website: https://mrca-frontend.onrender.com/  
+
+⚠️ This project has limited funds (I am a student). Once the monthly LLM usage fund limit is reached, the application will stop providing responses and will display an error message.  
+Please contact me (a.omegapy@gmail.com) if this happend and you still want to try the application.
 
 ---
 
@@ -152,7 +161,7 @@ python build_graph_debug.py
 
 ---
 
-## 📊 **Knowledge Base Statistics**
+## **Knowledge Base Statistics**
 
 ### **Final Database Composition**
 - **Total Nodes**: 26,429+ comprehensive regulatory entities
@@ -171,7 +180,7 @@ python build_graph_debug.py
 
 ---
 
-## 🔧 **Configuration**
+## **Configuration**
 
 All scripts require a secrets file at `../.streamlit/secrets.toml` with:
 
@@ -189,7 +198,7 @@ NEO4J_USERNAME = "neo4j"
 NEO4J_PASSWORD = "your-password"
 ```
 
-## 📊 Typical Workflow
+## Typical Workflow
 
 1. **Download regulatory data:**
    ```bash
@@ -207,7 +216,7 @@ NEO4J_PASSWORD = "your-password"
    - Verify Neo4j database has nodes and vector index
    - Test the Advanced Parallel Hybrid system
 
-## 🎯 Integration with MRCA
+## Integration with MRCA
 
 These scripts build the foundation for the MRCA Advanced Parallel Hybrid system:
 
@@ -216,14 +225,14 @@ These scripts build the foundation for the MRCA Advanced Parallel Hybrid system:
 - **Parallel Processing**: Simultaneous execution of both methods
 - **Context Fusion**: Research-based combination of results
 
-## 📈 Performance
+## Performance
 
 - **build_hybrid_store.py**: ~100 chunks/hour (production scale)
 - **Total processing time**: ~4-6 hours for complete CFR dataset
 - **Final database**: 26,429+ nodes with comprehensive vector index
 - **Vector dimensions**: 768 (Google embedding-001 model)
 
-## 🛠️ **Troubleshooting**
+## **Troubleshooting**
 
 ### **Common Issues**
 
@@ -268,7 +277,7 @@ tail -f build_graph_debug.log
 
 ## **Advanced Features**
 
-### **🔧 Custom Configuration**
+### **Custom Configuration**
 ```python
 # Modify chunk size and overlap in build_hybrid_store.py
 CHUNK_SIZE = 1000        # Characters per chunk
@@ -276,7 +285,7 @@ CHUNK_OVERLAP = 200      # Overlap between chunks
 BATCH_SIZE = 10          # Chunks processed per batch
 ```
 
-### **📊 Progress Monitoring**
+### **Progress Monitoring**
 ```python
 # Monitor build progress programmatically
 from build_hybrid_store import BuildMonitor
@@ -286,7 +295,7 @@ stats = monitor.get_current_stats()
 print(f"Progress: {stats['chunks_processed']}/{stats['total_chunks']}")
 ```
 
-### **🎯 Selective Processing**
+### **Selective Processing**
 ```python
 # Process specific CFR parts only
 python build_hybrid_store.py --parts 100-199  # Coal mine safety only
@@ -297,14 +306,14 @@ python build_hybrid_store.py --volumes 1,2    # Exclude metal/nonmetal
 
 ## **Integration with MRCA System**
 
-### **🔗 Knowledge Base Usage**
+### **Knowledge Base Usage**
 Once built, the knowledge base supports:
 - **VectorRAG**: Semantic search using vector embeddings
 - **GraphRAG**: Entity relationship traversal
 - **Advanced Parallel Hybrid**: Simultaneous vector and graph queries
 - **Quality Assessment**: Confidence scoring and result validation
 
-### **📈 Performance Optimization**
+### **Performance Optimization**
 The build process optimizes for:
 - **Fast Vector Search**: Optimized Neo4j vector indexes
 - **Efficient Graph Traversal**: Relationship indexing for quick queries
@@ -315,21 +324,19 @@ The build process optimizes for:
 
 ## **Contributing**
 
-### **🤝 Development Guidelines**
+### **Development Guidelines**
 1. **Test with Small Datasets**: Use debug scripts for development
 2. **Monitor Resource Usage**: Ensure sufficient system resources
 3. **Validate Data Quality**: Check entity extraction accuracy
 4. **Document Changes**: Update README for configuration modifications
 
-### **🔬 Research Opportunities**
+### **Research Opportunities**
 - **Enhanced Entity Extraction**: Improved MSHA-specific entity recognition
 - **Advanced Chunking**: Semantic-aware document segmentation
 - **Quality Metrics**: Automated knowledge base quality assessment
 - **Incremental Updates**: Support for updating existing knowledge bases
 
 ---
-
-**MRCA Build Data provides the foundation for Advanced Parallel HybridRAG technology through comprehensive knowledge base construction and optimization.**
 
 © 2025 Alexander Samuel Ricciardi - MRCA Build Data Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System 
