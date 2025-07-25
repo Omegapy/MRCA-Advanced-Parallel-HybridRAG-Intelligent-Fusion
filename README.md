@@ -399,7 +399,7 @@ python build_hybrid_store.py
 - **`POST /generate_parallel_hybrid`**: Main processing endpoint
 
 ### **Request Format**
-```json
+```
 {
   "user_input": "string",           // REQUIRED: Natural language question
   "session_id": "string",           // OPTIONAL: Session identifier
@@ -409,7 +409,7 @@ python build_hybrid_store.py
 ```
 
 ### **Response Format**
-```json
+```
 {
   "response": "string",             // Generated response
   "processing_time": 12.34,         // Processing time in seconds
