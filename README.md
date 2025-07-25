@@ -82,7 +82,7 @@ This approach combines:
 
 ---
 
-## 🚀 **Quick Start**
+## **Quick Start**
 
 ### **Prerequisites**
 - Docker Desktop (latest version)
@@ -116,13 +116,13 @@ cp .streamlit/secrets.toml.template .streamlit/secrets.toml
 python3 start_services.py
 ```
 
-#### **🔧 Advanced: Dev Container Launcher**
+#### **Advanced: Dev Container Launcher**
 ```bash
 # Original launcher with monitoring (now with detached processes)
 python3 launch_devcontainer.py
 ```
 
-#### **🛑 Stop Services**
+#### **Stop Services**
 ```bash
 # Stop all MRCA services
 python3 stop_services.py
@@ -195,13 +195,13 @@ docker-compose ps
 ### **Core Technologies**
 - **Backend**: Python 3.12 + FastAPI + Pydantic
 - **Frontend**: Streamlit + Modern CSS
-- **🗄Database**: Neo4j Aura (cloud)
+- **Database**: Neo4j Aura (cloud)
 - **🤖 AI/ML**: OpenAI GPT-4o + Google Gemini + LangChain
 
 ### **Advanced Components**
 - **Parallel Processing**: asyncio + ThreadPoolExecutor
 - **Vector Search**: Neo4j Vector Index + Gemini embeddings
-- **🕸Graph Processing**: Cypher generation + GraphCypherQAChain
+- **Graph Processing**: Cypher generation + GraphCypherQAChain
 - **Context Fusion**: Custom research-based algorithms
 
 ### **Development Tools**
@@ -447,7 +447,7 @@ For complete API documentation, visit: http://localhost:8000/docs
 
 ---
 
-## 🛡**Security & Compliance**
+## **Security & Compliance**
 
 ### **Data Privacy**
 - **No Personal Data Storage**: System processes regulatory queries only
@@ -511,7 +511,7 @@ For complete API documentation, visit: http://localhost:8000/docs
 
 ---
 
-## 🔮 **Future Enhancements**
+## **Future Enhancements**
 
 ### **Research Opportunities**
 - **New Fusion Algorithms**: Machine learning-based fusion strategies
