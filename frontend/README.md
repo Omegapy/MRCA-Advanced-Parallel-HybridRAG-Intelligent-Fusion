@@ -12,7 +12,7 @@ For more project documentation see the `Documents` folder.
 ---
 
 © 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
-License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
+License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion (APH-IF) System 
 
 ---
 
