@@ -9,7 +9,11 @@
 **FastAPI-based backend implementing novel Advanced Parallel HybridRAG - Intelligent Fusion technology 
 with simultaneous VectorRAG and GraphRAG execution for enhanced mining regulatory compliance assistance.**
 
-© 2025 Alexander Samuel Ricciardi - MRCA Backend Module  
+For more project documentation see the `Documents` folder.
+
+---
+
+© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
 
 ---
