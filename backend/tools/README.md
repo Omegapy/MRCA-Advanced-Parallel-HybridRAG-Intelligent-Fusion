@@ -8,7 +8,11 @@
 
 **Specialized tools for querying the MSHA regulatory knowledge graph through VectorRAG, GraphRAG, and general query processing capabilities.**
 
-© 2025 Alexander Samuel Ricciardi - MRCA Backend Tools Module  
+For more project documentation see the `Documents` folder.
+
+---
+
+© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
 
 ---
