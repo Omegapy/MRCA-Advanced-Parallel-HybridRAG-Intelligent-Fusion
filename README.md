@@ -1,4 +1,4 @@
-# MRCA - Mining Regulatory Compliance Assistant - Advanced Parallel Hybrid - Intelligent Fusion Technology
+# MRCA - Mining Regulatory Compliance Assistant - Advanced Parallel Hybrid - Intelligent Fusion (APH-IF) Technology
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
@@ -15,7 +15,7 @@ For more project documentation see the `Documents` folder.
 ---
 
 © 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
-License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
+License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion (APH-IF) System 
 
 ---
 
