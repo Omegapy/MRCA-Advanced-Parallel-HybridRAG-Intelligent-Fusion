@@ -10,7 +10,11 @@
 **An AI-powered regulatory compliance assistant providing mining safety guidance through.  
 The system uses a novel RAG system - Advanced Parallel HybridRAG - Intelligent Fusion.**
 
-© 2025 Alexander Samuel Ricciardi - Mining Regulatory Compliance Assistant  
+For more project documentation see the `Documents` folder.
+
+---
+
+© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
 
 ---
@@ -35,12 +39,12 @@ MRCA (Mining Regulatory Compliance Assistant) is a web application that uses an 
 and easy access to MSHA (Mine Safety and Health Administration) regulations using natural language queries. 
 Built on novel **Advanced Parallel HybridRAG** technology.
 
-### **Core Innovation: Advanced Parallel Hybrid**
+### **Core Innovation: Advanced Parallel HybridRAG**
 
 Unlike traditional (basic) RAG (Retrieval Augmented Generation) systems that use *sequential* processing, 
 MRCA implements **Advanced Parallel HybridRAG** that performs **concurrent VectorRAG (semantic search) 
 and GraphRAG (traversal search) queries** 
-and fuses the queries results using intelligent context fusion (AI):
+and fuses the queries results using **Intelligent Context Fusion** (AI):
 
 - **Traditional RAG**: `if condition: vector_search() else: graph_search()`
 - **MRCA's Innovation**: `asyncio.gather(vector_task, graph_task)` - parallelism - `intelligent_context_fusion`
