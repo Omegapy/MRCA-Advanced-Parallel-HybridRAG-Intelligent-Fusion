@@ -7,6 +7,10 @@
 
 **Streamlit-based web application provides access to MRCA's Advanced Parallel HybridRAG - Intelligent Fusion technology for mining safety regulation queries.**
 
+For more project documentation see the `Documents` folder.
+
+---
+
 © 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System
 
@@ -109,7 +113,7 @@ Streamlit application configuration:
 - **Performance**: Caching and optimization options
 - **Security**: CORS and authentication settings
 
-### **🔧 Key Functions**
+### **Key Functions**
 
 #### **Configuration Management**
 ```python
@@ -163,7 +167,7 @@ Users can select from 4 research-based fusion strategies:
 - **`comparative_analysis`**: Source complementarity display
 - **`confidence_weighted`**: Quality-adjusted responses
 
-### **⚙️ System Settings**
+### **System Settings**
 - **Session Persistence**: Automatic session ID generation and management
 - **Error Recovery**: Graceful fallback for backend connectivity issues
 - **Performance Tracking**: Real-time metrics collection and display
@@ -398,7 +402,7 @@ docker build -f Dockerfile.frontend -t mrca-frontend .
 docker run -p 8501:8501 mrca-frontend
 ```
 
-### **🔧 Configuration Management**
+### **Configuration Management**
 - **Environment-Specific**: Different configurations per deployment environment
 - **Health Checks**: Container and application-level health monitoring
 - **Scaling**: Horizontal scaling support for high traffic
@@ -421,8 +425,6 @@ docker run -p 8501:8501 mrca-frontend
 - **Professional Appearance**: Clean, modern interface design
 
 ---
-
-**MRCA Frontend provides professional mining safety guidance through an intuitive web interface powered by Advanced Parallel HybridRAG - Inteligent Fusion technology.**
 
 © 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System 
