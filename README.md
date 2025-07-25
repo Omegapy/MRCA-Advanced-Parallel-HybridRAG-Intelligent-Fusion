@@ -15,16 +15,15 @@ License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusi
 
 ---
 
-Author:  
-Alexander Ricciardi 
-Colorado State University Global  
-CSC480: Capstone Computer Science  
-Dr. Shaher Daoud  
-Spring-D Semester June-August 2025  
+Author: Alexander Ricciardi  
+Date: 07/25/2025
+
+This project was part of my capstone project at CSU Global.
 
 ---
 
 MRCA Website: https://mrca-frontend.onrender.com/  
+
 ⚠️ This project has limited funds (I am a student). Once the monthly LLM usage fund limit is reached, the application will stop providing responses and will display an error message.  
 Please contact me (a.omegapy@gmail.com) if this happend and you still want to try the application.
 
@@ -44,7 +43,7 @@ and GraphRAG (traversal search) queries**
 and fuses the queries results using intelligent context fusion (AI):
 
 - **Traditional RAG**: `if condition: vector_search() else: graph_search()`
-- **MRCA's Innovation**: `asyncio.gather(vector_task, graph_task)` - **true parallelism**
+- **MRCA's Innovation**: `asyncio.gather(vector_task, graph_task)` - parallelism - `intelligent_context_fusion`
 
 This approach combines:
 - **VectorRAG**: Semantic similarity search using 768-dimensional Gemini embeddings
