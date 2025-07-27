@@ -542,6 +542,8 @@ For complete API documentation, visit: http://localhost:8000/docs
 
 ### **Research Opportunities**
 - **New Fusion Algorithms**: Machine learning-based fusion strategies
+- **Advanced NLP**: Improved entity extraction and relationship modeling
+- **Performance Optimization**: GPU acceleration and distributed processing
 - **Domain Expansion**: Other regulatory domains beyond mining
 
 ---

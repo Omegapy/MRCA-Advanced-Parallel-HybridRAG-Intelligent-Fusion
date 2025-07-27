@@ -204,11 +204,11 @@ Finally, the overall MRCA architecture meets all the quality attributes that sho
 
 ## References
 
-Abdelfattah, A., & Cerny, T. (2023). Filling the gaps in microservice frontend communication: Case for new frontend patterns. *In Proceedings of the 13th International Conference on Cloud Computing and Services Science (CLOSER 2023)*, 1, 184–193. SciTePress. https://doi.org/10.5220/0011812500003488
+* Abdelfattah, A., & Cerny, T. (2023). Filling the gaps in microservice frontend communication: Case for new frontend patterns. *In Proceedings of the 13th International Conference on Cloud Computing and Services Science (CLOSER 2023)*, 1, 184–193. SciTePress. https://doi.org/10.5220/0011812500003488
 
-Keeling, M. (2017). Chapter 5: Dig for architecturally significant requirements. *Design it! From programmer to software architect*. Pragmatic Bookshelf. ISBN-13: 978-1-680-50209-1
+* Keeling, M. (2017). Chapter 5: Dig for architecturally significant requirements. *Design it! From programmer to software architect*. Pragmatic Bookshelf. ISBN-13: 978-1-680-50209-1
 
-Sarmah, B., Patel, S., Hall, B., Pasquali, S., Rao, R., & Mehta, D. (2024, August 9). *HybridRAG: Integrating Knowledge Graphs and Vector Retrieval Augmented Generation for Efficient Information Extraction*. arXiv. https://arxiv.org/abs/2408.04948
+* Sarmah, B., Patel, S., Hall, B., Pasquali, S., Rao, R., & Mehta, D. (2024, August 9). *HybridRAG: Integrating Knowledge Graphs and Vector Retrieval Augmented Generation for Efficient Information Extraction*. arXiv. https://arxiv.org/abs/2408.04948
 
 ---
 
@@ -372,7 +372,7 @@ This document provides a detailed class diagram of the MRCA backend, a class dia
 
 ## References
 
-Ricciardi (2025, June 29). *Module 3 Capstone Milestone: Software Design* [Student Essay]. CSC480 Capstone Computer Science. CSU Global.
+* Ricciardi (2025, June 29). *Module 3 Capstone Milestone: Software Design* [Student Essay]. CSC480 Capstone Computer Science. CSU Global.
 
 ---
 ---
@@ -456,23 +456,23 @@ This software is designed using techniques, patterns, and architecture such as m
 
 ## References
 
-Andersen, G. (2024, February 8). *Building resilient systems – A guide to fault-tolerant software architecture*. MoldStud. https://moldstud.com/articles/p-building-resilient-systems-through-fault-tolerant-software-architecture
+* Andersen, G. (2024, February 8). *Building resilient systems – A guide to fault-tolerant software architecture*. MoldStud. https://moldstud.com/articles/p-building-resilient-systems-through-fault-tolerant-software-architecture
 
-ByteByteGo. (2024, February 14). *A cheat sheet for designing fault-tolerant systems*. ByteByteGo. https://bytebytego.com/guides/a-cheat-sheet-for-designing-fault-tolerant-systems/
+* ByteByteGo. (2024, February 14). *A cheat sheet for designing fault-tolerant systems*. ByteByteGo. https://bytebytego.com/guides/a-cheat-sheet-for-designing-fault-tolerant-systems/
 
-GeeksforGeeks. (2024, June 19). *Basic fault-tolerant software techniques*. https://www.geeksforgeeks.org/software-engineering/basic-fault-tolerant-software-techniques/
+* GeeksforGeeks. (2024, June 19). *Basic fault-tolerant software techniques*. https://www.geeksforgeeks.org/software-engineering/basic-fault-tolerant-software-techniques/
 
-Gopinath, D. (1986). *A tutorial on the principles of fault tolerance*. Sādhanā, 11(1–2), 7–22. https://www.ias.ac.in/article/fulltext/sadh/011/01-02/0007-0022
+* Gopinath, D. (1986). *A tutorial on the principles of fault tolerance*. Sādhanā, 11(1–2), 7–22. https://www.ias.ac.in/article/fulltext/sadh/011/01-02/0007-0022
 
-Keeling, M. (2017). Chapter 7: Create a Foundation with Patterns. *Design it! From programmer to software architect*. Pragmatic Bookshelf. ISBN-13: 978-1-680-50209-1
+* Keeling, M. (2017). Chapter 7: Create a Foundation with Patterns. *Design it! From programmer to software architect*. Pragmatic Bookshelf. ISBN-13: 978-1-680-50209-1
 
-Lee, S. (2025, June 11). *Fault Tolerance 101: A Beginner’s Guide*. Number Analytics. https://www.numberanalytics.com/blog/fault-tolerance-101
+* Lee, S. (2025, June 11). *Fault Tolerance 101: A Beginner’s Guide*. Number Analytics. https://www.numberanalytics.com/blog/fault-tolerance-101
 
-Inacio, C. (1998). *Software fault tolerance - Electrical and computer engineering [Course]*. Carnegie Mellon University. https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/
+* Inacio, C. (1998). *Software fault tolerance - Electrical and computer engineering [Course]*. Carnegie Mellon University. https://users.ece.cmu.edu/~koopman/des_s99/sw_fault_tolerance/
 
-Slivinski, T., Broglio, C., Wild, C., Goldberg, J., Levitt, K., Hitt, E., & Webb, J. (1984). *Study of fault-tolerant software technology* (NASA Contractor Report 172385). NASA Langley Research Center. https://ntrs.nasa.gov/api/citations/19870002074/downloads/19870002074.pdf
+* Slivinski, T., Broglio, C., Wild, C., Goldberg, J., Levitt, K., Hitt, E., & Webb, J. (1984). *Study of fault-tolerant software technology* (NASA Contractor Report 172385). NASA Langley Research Center. https://ntrs.nasa.gov/api/citations/19870002074/downloads/19870002074.pdf
 
-Solouki, M. A., Angizi, S., & Violante, M. (2024, April 16). *Dependability in embedded systems: A survey of fault tolerance methods and software-based mitigation techniques* (arXiv:2404.10509v1) [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2404.10509
+* Solouki, M. A., Angizi, S., & Violante, M. (2024, April 16). *Dependability in embedded systems: A survey of fault tolerance methods and software-based mitigation techniques* (arXiv:2404.10509v1) [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2404.10509
 
 ---
 ---
@@ -574,17 +574,19 @@ MRCA embodies these strategies in its design and implementation. Fault tolerance
 
 * Solouki, M. A., Angizi, S., & Violante, M. (2024, April 16). *Dependability in embedded systems: A survey of fault tolerance methods and software-based mitigation techniques* (arXiv:2404.10509v1) \[Preprint]. arXiv. [https://doi.org/10.48550/arXiv.2404.10509](https://doi.org/10.48550/arXiv.2404.10509)
 
-# Module 6 Capstone Milestone: Software Project Testing Plan&#x20;
-
-**Alexander Ricciardi**
-Colorado State University Global
-CSC480: Capstone Computer Science
-Dr. Shaher Daoud
-July 20, 2025
+---
 
 ---
 
-## Introduction&#x20;
+# Module 6 Capstone Milestone: Software Project Testing Plan
+
+---
+
+# Module 6 Capstone Milestone: Software Project Testing Plan
+
+---
+
+## Introduction
 
 In software development, *software testing* is a crucial activity in the project‑development lifecycle. It evaluates and improves software systems, ensuring they function correctly, remain secure, satisfy stakeholders’ requirements, and deliver value to end‑users. The Mining Regulatory Compliance Assistant (MRCA) is an AI‑powered system that employs **Advanced Parallel HybridRAG (APH)**—a novel retrieval‑augmented generation (RAG) technique that fuses vector similarity search, graph‑based traversal, and semantic fusion—to provide grounded answers about U.S. MSHA regulations (30 CFR). This AI architecture introduces challenges such as non‑deterministic outputs, data‑dependency factors, and hallucination risks; consequently, a comprehensive testing strategy is essential.
 
@@ -776,6 +778,110 @@ The provided use test cases map to these test types, showcase specific inputs an
 - Kalra, R., Wu, Z., Gulley, A., Hilliard, A., Guan, X., Koshiyama, A., & Treleaven, P. (2025, February 25). *HyPARAG: A hybrid parameter adaptive retrieval-augmented generation system for AI legal and policy applications* (arXiv No. 2409.09046v2) [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2409.09046
 - Keeling, M. (2017). Chapter 12: Give the architecture a report Card. *Design it! From programmer to software architect*. Pragmatic Bookshelf. ISBN-13: 978-1-680-50209-1
 - Yu, H., Gan, A., Zhang, K., Tong, S., Liu, Q., & Liu, Z. (2024, July 3). *Evaluation of retrieval-augmented generation: A survey* (arXiv No. 2405.07437v2) [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2405.07437
+
+---
+---
+
+# Module 7 Capstone Milestone: Software Configuration Management
+
+---
+
+## Module 7 Capstone Milestone: Software Configuration Management
+
+The Mining Regulatory Compliance Assistant (MRCA) is an AI-powered web application based on microservices architecture and a novel Advanced Parallel HybridRAG (APH) system. MRCA allows users to query Mine Safety and Health Administration (MSHA) regulations using natural language. This document provides an overview of the MRCA Software Configuration Management (SCM) process. An SCM is a configuration management process that supports, throughout a software life cycle, the software’s management, development, maintenance, quality, and users (Washizaki, 2024). The MRCA’s SCM methodology is tailored for a solo-developer team and addresses the unique MRCA needs, such as handling LLM integrations, graph databases with vector embedding, a novel RAG system, and frequent iterations within an 8-week development period. The SCM process utilizes Git with GitHub for version control, incorporating integrated branching strategies, change control, and testing.
+
+---
+
+## MRCA’s SCM Methodology
+
+MRCA’s SCM methodology is based on IEEE 828-2012 standards modified for a small-scale, AI-powered project. IEEE 828-2012 is a standard designed and maintained by the Institute of Electrical and Electronics Engineers (IEEE) for Configuration Management in Systems and Software Engineering (IEEE, 2012). The standard describes how the configuration management processes need to be established, implemented, who the responsible parties are for doing specific activities, when these activities are to happen, and what specific resources are required (NASA, 2022). The IEEE 828-2012 standards, modified to accommodate the MRCA-specific RAG/AI requirements, that is, include configuration items not typically found in traditional software, such as datasets, LLM prompts, and AI model versions.
+
+The MRCA’s SCM methodology includes four core activities, which are configuration identification, change control, status accounting, and audit/testing. Configuration identification defines the code base structure, documentation, and artifacts. This includes Configuration items (CIs), which are Python source files such as `backend/main.py` and `frontend/bot.py`, data scripts stored in standalone files (e.g., `build_data/cfr_downloader.py`), library dependencies (`requirements.txt`), and documentation (e.g., UML diagrams).
+
+---
+
+## Change Control Configuration
+
+Change control uses a Git version control system that is managed through GitHub with GitFlow-inspired branching that integrates a GitFlow-Lite branching strategy. GitFlow is a branching model that uses multiple branches to transfer code from development to production (AWS, n.d.). GitFlow-Lite is a subset of Git-Flow, with a simplified branching structure that incorporates a long-lived Development trunk branch and short-lived Feature branches (Syntevo, n.d.). The MRCA’s SCM branching model integrates the GitFlow-Lite by implementing a main branch for production-ready code, a develop branch for code implementation, and feature branches such as `feature/parallel-hybrid` for implementing and testing new features, and a hotfix branch for urgent fixes. This SCM Git version control system is well-suited for a solo-developer team with an 8-week development timeline by reducing the complexity and overhead of a full GitFlow model.
+
+---
+
+## Status Accounting System and Audit Configuration
+
+The status accounting system tracks versions using a versioning naming structure (version 2.0.0) for major component releases and new feature implementation, like implementing a core new APH component, and for hotfix and feature improvement (e.g., version 2.0.1); note that releases are Git merges into the main branch from the develop branch or a hotfix branch. In addition to being documented in the project development documentation, these GitHub Releases are documented using `git commit -m"..."` and accessible using `git log`. Audits are set bi-weekly through GitHub Actions workflows that run tests automatically and check coverage (>80%), using tools like Dependabot (GitHub, n.d.a) to monitor and test dependencies for vulnerabilities. Note that audits are security and integrity code automated checks implemented using GitHub Actions workflows after the code has been merged (GitHub, n.d.a). In the context of MRCA’s SCM process, the audit is executed after a merger is applied to the main branch. These status accounting and audit approaches provide a verifiable history of the project, ensuring that every code change is both documented and audited for security and integrity.
+
+---
+
+## Seamless Evolution: Change Control Process
+
+For MRCA, the processes Software Change Request (SCR) and Change Control Board (CCB) are integrated within the Git/GitHub workflow, enabling the development process to proceed without interruptions by following an iterative steps process based on a Kanban-Agile development methodology. The step can be defined as follows:
+
+1. **Create a GitHub Issue** describing the modification, for example, “adding circuit breaker in backend/circuit\_breaker.py”.
+2. **Create a feature branch** from develop, e.g., `git checkout -b feature/circuit-breaker`, then implement/commit the changes by using `git commit -m "Add CircuitBreaker class"`.
+3. **Design and run unit tests**, for example, by performing a `pytest tests/unit/test_circuit_breaker.py` and by performing integration tests. Note that testing is executed directly on the feature/circuit-breaker branch.
+4. **Perform a Pull Request (PR), do a self-review**, and feature/circuit-breaker branch is merged into the develop branch after ensuring that the changes pass the CI checks.
+5. **Merge develop branch into the main branch** with a tag release (e.g., `git tag v2.1.0`), and push to GitHub.
+6. **Update the project documentation and the changelog**, and run audits via workflows.
+
+---
+
+## MRCA’s SMC Methodology Function and Justification
+
+This seamless SMC process supports MRCA's Kanban-style iterations, allowing merges to be reverted using `git revert`, respecting the development timelines, developing, implementing, testing, monitoring, fixing bugs, and auditing code for security and integrity issues. This audit process makes MRCA a secure, robust, and maintainable web application. Moreover, by adopting a GitFlow-Lite within GitHub distributed version control, the SMC process allows for offline work, branching for parallel development, and traceable code changes via commit history. Including benefits such as monitoring changes for troubleshooting using `git diff` and assurance of quick recovery from AI, database, and APIs integration issues, like reverting faulty LLM prompts in `hybrid_templates.py` or rolling back a data processing script that corrupted the Neo4j graph. This minimizes the risks of deployment failures and data corruption. In other words, the SMC process is well suited for a solo-development team by implementing automated workflows, lite branching, and reducing manual overhead significantly, while maintaining high-quality standards for software development and implementation that is secure and minimizes the risk of project failure due to technical debt (unreliable, easy, quick-fix solutions) or unclear structure or plan as more features are added.
+
+---
+
+## Testing Plan
+
+The testing plan, integrated into SCM, includes unit, integration, end-to-end (E2E), reliability, and architecture tests. These tests are executed using test cases based on MRCA’s Architecturally Significant Requirements (ARS) (Keeling, 2017). Below is a list of the test cases used to measure the quality of the MRCA system and its microservices/APH architecture.
+
+---
+
+### Table 1: Test Cases and SCM Controls
+
+| Test and Risk Scenario                                                              | SCM Control                                                                                                                                                                                                                                                                                                                                | Metrics                                                                                                        | Benefit / Justification                                                                                                                                                                |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Test case 1 - Regulatory Citation Retrieval - Component Integration Test**        | Faulty vector embedding and graph retrieval. Implement feature/\* branch control and control the configuration of the retrieval process. A failure will be a malformed citation and a MASH regulation section missing                                                                                                                      | ≥ 95 % passage retention; p95 latency < 120 ms                                                                 | This test verifies how the integrated components of the system work together (Das, 2024). It verifies the quality of the retrieval process based on the AHP system                     |
+| **Test case 2 - Multi-Domains Query - Component Integration Test**                  | Faulty vector embedding and graph query results, and intelligent fusion (hybrid\_fusion). Implements PR checklist, latency, and integration validity. Controls the configuration of the fusion validity across multiple MSHA regulatory domains.                                                                                           | Graph DB latency < 150 ms, fusion\_quality score ≥ .70                                                         | Prevents runtime failures; same rationale as test case 1. Test if the integrated components of the system fail when they are working together, and measure the quality of the fusion.  |
+| **Test case 3 - Reliability Under Degraded External Services - End-to-End Testing** | API’s faulty communication that may cause cascading faults. Implements circuitbreaker and hot-hot-fix branch control configurations. Test uses a chaos testing approach. It tests the circuit breaker functionality, on/off states, retry/backoff, and user messaging when the Neo4j database, LLM providers, or network links or API fail | Graceful 503; breaker opens ≤ 5 fails                                                                          | Helps to improve system resilience in microservices architecture by using circuit breakers to control issues related to network instability and unresponsive services (Krishna, 2023). |
+| **Test case 4 - Reliability, Fault-Injection Test, and Unit Tests**                 | Latency under heavy load. Control CI. The test uses chaos scenario fault control. It tests the performance of the system under concurrent load by injecting faults                                                                                                                                                                         | p95 < 1.2 s; success ≥ 99 %. LLM’s response time should be 10–35s                                              | Chaos testing helps to identify latent faults, improving the system's ability to respond to overcrowding, network delay, and service outages (Chintale et al., 2023).                  |
+| **Test case 5 - Confidence Score – Overall Architecture Evaluation (AHP)**          | Hallucinations, off-topic prompts. Implements commit history control configuration by using git revert. It uses Hallucination tests by inputting 50 off-topic prompts. It tests if the system detects unsupported prompts and checks response confidence outputs                                                                           | OOS precision ≥ 95 %; hallucination ≤ 5 %; rollback ≤ 5 min                                                    | Allows for rapid recovery from hallucinations and aligns with HaluBench benchmark protocol for handling hallucinations (Ravi et al., 2024).                                            |
+| **Test case 6 - Dependency Vulnerabilities and Security – Audits**                  | Implements audit configuration control. The Dependabot tool is used to block vulnerable libraries (Dependencies).                                                                                                                                                                                                                          | Dependabot reports a vulnerable dependency. Main branch merge protection on reported dependency vulnerability. | Allows for secure production code delivery.  Protects production code.                                                                                                                 |
+
+> **Note:** The table describes the test cases, their related SCM control, expected test output metric, and their benefits/justification.
+
+---
+
+## Conclusion
+
+The MRCA’s SCM process is a configuration management methodology that is well-suited for addressing the software management challenges posed by MRCA's AI-powered and novel APH system. It implements a GitFlow-Lite branching approach, an automated workflow, and a testing plan. It also caters to a solo-development team, and it provides traceability, stability, and seamless evolution of the application’s architectural components. Additionally, the SMC testing plan strategy mitigates risks, manages complexity, and helps to successfully deliver a high-quality and maintainable application.
+
+---
+
+## References
+
+* AWS. (n.d.). Gitflow branching strategy. Choosing a Git branching strategy for multiaccount DevOps environments. AWS Documentation. [https://docs.aws.amazon.com/prescriptive-guidance/latest/choosing-git-branch-approach/gitflow-branching-strategy.html](https://docs.aws.amazon.com/prescriptive-guidance/latest/choosing-git-branch-approach/gitflow-branching-strategy.html)
+
+* Chintale, P., Pandiyan, A., Chaudhari, M., Chigurupati, M., Desaboyina, G., & Malviya, R. K. (2023). Serverless chaos engineering: A framework for fault injection and resiliency testing in AI‑powered cloud workflows. Journal of Harbin Engineering University, 44(12), 1577‑1584. [https://harbinengineeringjournal.com/index.php/journal/article/view/3460](https://harbinengineeringjournal.com/index.php/journal/article/view/3460)
+
+* Das, S. (2024, November 4). Integration testing and unit testing in the age of AI. Aviator Blog. [https://www.aviator.co/blog/integration-testing-and-unit-testing-in-the-age-of-ai/](https://www.aviator.co/blog/integration-testing-and-unit-testing-in-the-age-of-ai/)
+
+* GitHub. (n.d.a). Keeping your supply chain secure with Dependabot. Securing code.GitHub Docs. [https://docs.github.com/en/code-security/dependabot](https://docs.github.com/en/code-security/dependabot)
+
+* GitHub. (n.d.b). Auditing security alerts. Securing code. GitHub Docs. [https://docs.github.com/en/code-security/getting-started/auditing-security-alerts](https://docs.github.com/en/code-security/getting-started/auditing-security-alerts)
+
+* IEEE. (2012). IEEE standard for configuration management in systems and software engineering (IEEE Std 828-2012). [https://doi.org/10.1109/IEEESTD.2012.6170935](https://doi.org/10.1109/IEEESTD.2012.6170935)
+
+* Keeling, M. (2017). Chapter 12: Give the architecture a report Card. Design it! From programmer to software architect. Pragmatic Bookshelf. ISBN-13: 978-1-680-50209-1
+* Krishna, H. (2023, October 3). What is circuit breaker in microservices? SayOne Tech Blog. [https://www.sayonetech.com/blog/circuit-breaker-in-microservices/](https://www.sayonetech.com/blog/circuit-breaker-in-microservices/)
+
+* NASA. (2022). Chapter 5: Software Configuration Management. NASA procedural requirements for software engineering (NPR 7150.2D \[Directive]. NASA Office of the Chief Engineer. [https://nodis3.gsfc.nasa.gov/displayDir.cfm?Internal\_ID=N\_PR\_7150\_002D\_\&page\_name=Chapter5\&utm\_source](https://nodis3.gsfc.nasa.gov/displayDir.cfm?Internal_ID=N_PR_7150_002D_&page_name=Chapter5&utm_source)
+* Ravi, S. S., Mielczarek, B., Kannappan, A., Kiela, D., & Qian, R. (2024, July 11). Lynx: An opensource hallucination evaluation model (arXiv:2407.08488) \[Preprint]. arXiv. [https://doi.org/10.48550/arXiv.2407.08488](https://doi.org/10.48550/arXiv.2407.08488)
+
+* Syntevo (n.d.). GitFlow Light. SmartGit manual: Development processes. Syntevo Docs. [https://docs.syntevo.com/SmartGit/Latest/Manual/DevelopmentProcesses/Git-Flow-Light](https://docs.syntevo.com/SmartGit/Latest/Manual/DevelopmentProcesses/Git-Flow-Light)
+
+* Washizaki, H., (Eds.). (2024). Chapter 8: Software Configuration Management. Guide to the Software Engineering Body of Knowledge (SWEBOK guide) (Version 4.0). IEEE Computer Society. [https://www.swebok.org](https://www.swebok.org)
+
 
 ---
 ---

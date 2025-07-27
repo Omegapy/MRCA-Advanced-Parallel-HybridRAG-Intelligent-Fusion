@@ -625,18 +625,22 @@ User Query → Mode Selection → Configuration → Processing → Results + Ana
 
 ### **Configuration System (`backend/config.py`)**
 - **Technology**: Pydantic settings with validation and automatic secrets loading
-- **Sources**: Environment variables, Streamlit `secrets.toml` (optionally a local `.env`) with automatic initialization loading
+- **Sources**: Environment variables, multiple Streamlit `secrets.toml` locations (optionally a local `.env`) with automatic initialization loading
+- **Priority Order**: `.streamlit/secrets.toml` (root) → `../streamlit/secrets.toml` → `frontend/.streamlit/secrets.toml`
 - **Components**: Database, LLM, API, performance, security settings with persistent session optimization
 - **Validation**: Comprehensive input validation and error handling
 - **Auto-Loading**: Secrets automatically loaded during configuration initialization (`init_config()` calls `update_from_secrets()`)
 - **Session Persistence**: Extended timeouts for 24-hour sessions and 1-hour keep-alive connections
+- **Dual Configuration**: Supports both backend (root) and frontend (subdirectory) secrets files
 
 ### **Security Implementation**
 - **Environment Variables**: API key management via environment variables
-- **Streamlit Secrets**: Development secrets integration
+- **Streamlit Secrets**: Development secrets integration with dual-location support
+- **Secrets Management**: Both root and frontend secrets files automatically ignored by git
 - **Input Validation**: Pydantic models for request validation
 - **CORS Middleware**: Secure cross-origin communication
 - **Domain Restriction**: MSHA regulatory domain boundaries
+- **Configuration Security**: Multiple secrets file locations with priority-based loading
 
 ### **Fault Tolerance and Reliability**
 
@@ -789,8 +793,14 @@ MRCA/                                           # Advanced Parallel Hybrid Syste
 ├── GLOBAL CONFIGURATION
 │   └── .streamlit/
 │       ├── config.toml                        # Global Streamlit configuration
-│       ├── secrets.toml                       # API keys and credentials
+│       ├── secrets.toml                       # API keys and credentials (backend/Docker)
 │       └── secrets.toml.template              # Secrets template
+│
+├── FRONTEND CONFIGURATION
+│   └── frontend/.streamlit/
+│       ├── config.toml                        # Frontend Streamlit configuration
+│       ├── secrets.toml                       # API keys and credentials (frontend)
+│       └── secrets.toml.template              # Frontend secrets template
 │
 ```
 
@@ -916,15 +926,21 @@ docker ps
 
 ### **Configuration**
 ```bash
-# Copy template and add your API keys
+# Copy template and add your API keys to BOTH required locations
 cp .streamlit/secrets.toml.template .streamlit/secrets.toml
+cp .streamlit/secrets.toml.template frontend/.streamlit/secrets.toml
 
-# Edit secrets.toml with your credentials:
+# Edit BOTH secrets.toml files with your credentials:
 # OPENAI_API_KEY = "sk-your-openai-key"
 # GEMINI_API_KEY = "your-gemini-key"
 # NEO4J_URI = "neo4j+s://your-instance.databases.neo4j.io"
 # NEO4J_USERNAME = "neo4j"
 # NEO4J_PASSWORD = "your-password"
+
+# Note: Both files are required:
+# - .streamlit/secrets.toml (for backend and Docker)
+# - frontend/.streamlit/secrets.toml (for Streamlit frontend)
+```
 ```
 
 ---
@@ -1646,7 +1662,7 @@ This layer forms the foundation of the backend, managing configurations, externa
 - **`config.py` (Configuration Management)**
   - **Purpose**: Centralizes all application settings using Pydantic for robust validation.
   - **Functionality**:
-    - Loads configuration from multiple sources in a prioritized order: environment variables, Streamlit's `secrets.toml` (optionally a local `.env`).
+    - Loads configuration from multiple sources in a prioritized order: environment variables, multiple Streamlit `secrets.toml` locations (`.streamlit/secrets.toml` → `../streamlit/secrets.toml` → `frontend/.streamlit/secrets.toml`), optionally a local `.env`.
     - Manages settings for the database (Neo4j URI, credentials), LLMs (API keys, model names), and the API server itself (host, port).
     - Implements a singleton pattern (`get_config()`) to ensure consistent configuration access across the application.
 
@@ -1739,7 +1755,7 @@ The following reference section provides a concise, file-level overview of every
   - **Key Functions**: `init_config()` (singleton initialization), `get_config()` (global access), `get_database_config()`, `get_llm_config()`, `get_logging_config()`, `validate_config()` (comprehensive validation).
   - **Configuration Domains**: API settings (host/port), Neo4j database (URI/credentials), OpenAI/Gemini APIs (keys/models), CORS policies, session management, rate limiting, logging, performance tuning.
   - **Singleton Pattern**: Global `_config_instance` ensures consistent configuration across all components with lazy initialization.
-  - **Multi-Source Loading**: Priority order: environment variables → `.env` files → Streamlit secrets (`.streamlit/secrets.toml`, automatically loaded during initialization).
+  - **Multi-Source Loading**: Priority order: environment variables → `.env` files → Streamlit secrets (`.streamlit/secrets.toml` → `../streamlit/secrets.toml` → `frontend/.streamlit/secrets.toml`, automatically loaded during initialization).
   - **Validation**: Comprehensive validation with error aggregation, format checking (API key prefixes), performance bounds validation.
   - **External Systems**: File system access for configuration files, no direct API calls but provides credentials for Neo4j Aura, OpenAI GPT-4o, Google Gemini.
   - **Key interactions:** Foundation module imported by *every* backend component (`llm.py`, `database.py`, `main.py`, `graph.py`, `tools/*`) via `get_config()` calls.
