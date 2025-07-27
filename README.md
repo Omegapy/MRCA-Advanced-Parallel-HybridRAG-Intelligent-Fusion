@@ -115,15 +115,20 @@ cd MRCA
 
 ### **2. Configure Secrets**
 ```bash
-# Copy template and add your API keys
+# Copy template and add your API keys to BOTH locations
 cp .streamlit/secrets.toml.template .streamlit/secrets.toml
+cp .streamlit/secrets.toml.template frontend/.streamlit/secrets.toml
 
-# Edit secrets.toml with your credentials:
+# Edit BOTH secrets.toml files with your credentials:
 # OPENAI_API_KEY = "sk-your-openai-key"
 # GEMINI_API_KEY = "your-gemini-key"
 # NEO4J_URI = "neo4j+s://your-instance.databases.neo4j.io"
 # NEO4J_USERNAME = "neo4j"
 # NEO4J_PASSWORD = "your-password"
+
+# Note: Both files are required:
+# - .streamlit/secrets.toml (for backend and Docker)
+# - frontend/.streamlit/secrets.toml (for Streamlit frontend)
 ```
 
 ### **3. Launch Application**

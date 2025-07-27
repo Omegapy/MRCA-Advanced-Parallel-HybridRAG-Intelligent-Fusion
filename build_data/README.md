@@ -101,8 +101,9 @@ python build_hybrid_store.py
 - Creates vector index for semantic search
 
 **Requirements:**
-- Valid `../.streamlit/secrets.toml` with API keys and Neo4j credentials
+- Valid secrets configuration with API keys and Neo4j credentials
 - Downloaded CFR PDFs (run cfr_downloader.py first)
+- Secrets file at `../.streamlit/secrets.toml` (project root)
 
 ### `build_graph_debug.py`
 Debug version of the graph builder for testing and troubleshooting.
@@ -196,13 +197,13 @@ python build_graph_debug.py
 
 ## **Configuration**
 
-All scripts require a secrets file at `../.streamlit/secrets.toml` with:
+All scripts require a secrets file at `../.streamlit/secrets.toml` (project root) with:
 
 ```toml
 # OpenAI Configuration
 OPENAI_API_KEY = "sk-your-openai-api-key"
 
-# Google Gemini Configuration  
+# Google Gemini Configuration
 GEMINI_API_KEY = "your-gemini-api-key"
 GEMINI_MODEL = "gemini-2.5-pro"
 
@@ -210,6 +211,17 @@ GEMINI_MODEL = "gemini-2.5-pro"
 NEO4J_URI = "neo4j+s://your-database.databases.neo4j.io"
 NEO4J_USERNAME = "neo4j"
 NEO4J_PASSWORD = "your-password"
+```
+
+**Setup Instructions:**
+```bash
+# From project root, copy template and configure
+cp .streamlit/secrets.toml.template .streamlit/secrets.toml
+# Edit .streamlit/secrets.toml with your actual credentials
+
+# Verify configuration from build_data directory
+cd build_data
+python -c "import sys; sys.path.append('..'); from backend.config import get_config; print('Config loaded successfully')"
 ```
 
 ## Typical Workflow
@@ -255,9 +267,10 @@ These scripts build the foundation for the MRCA Advanced Parallel Hybrid system:
 Error: Invalid API key or insufficient quota
 ```
 **Solution**:
-- Verify all API keys in `.streamlit/secrets.toml`
+- Verify all API keys in `../.streamlit/secrets.toml` (project root)
 - Check OpenAI and Gemini API quotas and billing
 - Ensure Neo4j Aura database is active and accessible
+- Confirm secrets file is not using placeholder values
 
 #### **Database Connection Issues**
 ```

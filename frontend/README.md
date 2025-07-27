@@ -1,13 +1,27 @@
-# MRCA Frontend - Streamlit User Interface
+# MRCA Backend - Advanced Parallel Hybrid  - Intelligent Fusion (APH-IF) API
 
-[![Frontend: Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Backend: FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Neo4j](https://img.shields.io/badge/Neo4j-008CC1?style=flat&logo=neo4j&logoColor=white)](https://neo4j.com/)
 
-**Advanced Parallel HybridRAG - Intelligent Fusion User Interface for Mining Regulatory Compliance Assistant**
+**Advanced Parallel HybridRAG API for Mining Regulatory Compliance Assistant**
 
-**Streamlit-based web application provides access to MRCA's Advanced Parallel HybridRAG - Intelligent Fusion technology for mining safety regulation queries.**
+**FastAPI-based backend implementing novel Advanced Parallel HybridRAG - Intelligent Fusion technology 
+with simultaneous VectorRAG and GraphRAG execution for enhanced mining regulatory compliance assistance.**
 
 For more project documentation see the `Documents` folder.
+
+---
+
+© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
+License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion (APH-IF) System 
+
+---
+
+Author: Alexander Ricciardi  
+Date: 07/25/2025
+
+This project was part of my capstone project at CSU Global.
 
 ---
 
@@ -18,273 +32,485 @@ Please contact me (a.omegapy@gmail.com) if this happend and you still want to tr
 
 ---
 
-© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
-License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion (APH-IF) System 
+## **What is MRCA Backend?**
 
----
+The MRCA Backend is a high-performance FastAPI application that implements the core Advanced Parallel HybridRAG technology. It serves as the central orchestration layer for mining regulatory compliance queries, coordinating parallel VectorRAG and GraphRAG retrieval, intelligent context fusion, and specialized template-based response generation.
 
-<img width="30" height="30" align="center" src="https://github.com/user-attachments/assets/a8e0ea66-5d8f-43b3-8fff-2c3d74d57f53"> Alexander Ricciardi (Omega.py)   
-Date: 07/25/2025
+### **Core Innovation: Advanced Parallel Hybrid**
 
-This project was part of my capstone project at CSU Global.
+Unlike traditional RAG systems that use sequential processing, MRCA Backend implements **true parallelism**:
 
----
+- **Traditional RAG**: `if condition: vector_search() else: graph_search()`
+- **MRCA Innovation**: `asyncio.gather(vector_task, graph_task)` - **concurrent execution**
 
-My Links:   
-
-<i><a href="https://www.alexomegapy.com" target="_blank"><img width="25" height="25" src="https://github.com/user-attachments/assets/a8e0ea66-5d8f-43b3-8fff-2c3d74d57f53"></i>
-<i><a href="https://www.alexomegapy.com" target="_blank"><img width="150" height="23" src="https://github.com/user-attachments/assets/caa139ba-6b78-403f-902b-84450ff4d563"></i>
-[![Medium](https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=whit)](https://medium.com/@alex.omegapy)
-<i><a href="https://dev.to/alex_ricciardi" target="_blank"><img width="53" height="20" src="https://github.com/user-attachments/assets/3dee9933-d8c9-4a38-b32e-b7a3c55e7e97"></i>
-[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?logo=Facebook&logoColor=white)](https://www.facebook.com/profile.php?id=100089638857137)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/alex-ricciardi)
-<i><a href="https://www.threads.net/@alexomegapy?hl=en" target="_blank"><img width="53" height="20" src="https://github.com/user-attachments/assets/58c9e833-4501-42e4-b4fe-39ffafba99b2"></i>
-[![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/AlexOmegapy)
-[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white)](https://www.youtube.com/channel/UC4rMaQ7sqywMZkfS1xGh2AA)    
-
----
-
-## **What is MRCA Frontend?**
-
-The MRCA Frontend is a professional Streamlit web application that provides users with an interface to access the Advanced Parallel HybridRAG - Intelligent Fusion technology. It offers real-time configuration options, performance analytics, and comprehensive mining regulatory compliance assistance through a modern, responsive user interface.
-
-### **Core Features**
-
-- **Dual-Mode AI Processing**: Traditional Agent + Advanced Parallel Hybrid modes
-- **Real-Time Configuration**: Live fusion strategy and template selection  
-- **Performance Analytics**: Processing times, confidence scores, fusion analysis
-- **Professional Interface**: Modern design with health monitoring
-- **Dynamic Settings**: 4 fusion strategies and 5 template types
-- **Quality Feedback**: Automated response quality assessment
+This approach combines:
+- **VectorRAG**: Semantic similarity search using 768-dimensional Gemini embeddings
+- **GraphRAG**: Knowledge graph traversal with automated Cypher generation
+- **Context Fusion**: Intelligent combination using 4 research-based fusion strategies
+- **Hybrid Templates**: 5 specialized response templates for different use cases
 
 ---
 
 ## **Architecture**
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│  MRCA Frontend Architecture (Streamlit)                  │
-│                                                          │
-│  ┌─────────────────┐    HTTP/REST     ┌──────────────┐   │
-│  │   User Browser  │ ◄──────────────► │   Frontend   │   │
-│  │   (Port 8501)   │                  │   (bot.py)   │   │
-│  └─────────────────┘                  └──────────────┘   │
-│                                              │           │
-│                                              ▼           │
-│  ┌──────────────────────────────────────────────────┐    │
-│  │  Streamlit Application Components                │    │
-│  │                                                  │    │
-│  │  ┌─────────────────┐    ┌─────────────────┐      │    │
-│  │  │  Configuration  │    │   Chat Interface│      │    │
-│  │  │   Sidebar       │    │   & Messages    │      │    │
-│  │  └─────────────────┘    └─────────────────┘      │    │
-│  │                                                  │    │
-│  │  ┌─────────────────┐    ┌─────────────────┐      │    │
-│  │  │  Performance    │    │  Health Monitor │      │    │
-│  │  │   Analytics     │    │  & System Info  │      │    │
-│  │  └─────────────────┘    └─────────────────┘      │    │
-│  └──────────────────────────────────────────────────┘    │
-│                                              │           │
-│                                              ▼           │
-│                                     ┌─────────────────┐  │
-│                                     │  Backend API    │  │
-│                                     │  (Port 8000)    │  │
-│                                     └─────────────────┘  │
-└──────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────┐
+│  MRCA Backend Architecture (FastAPI + Advanced Parallel Hybrid)    │
+│                                                                    │
+│  ┌─────────────────┐    HTTP/REST     ┌──────────────────────┐     │
+│  │   Frontend      │ ◄──────────────► │   FastAPI Server     │     │
+│  │   (Port 8501)   │                  │   main.py (8000)     │     │
+│  └─────────────────┘                  └──────────────────────┘     │
+│                                              │                     │
+│                                              ▼                     │
+│  ┌──────────────────────────────────────────────────────────┐      │
+│  │  Advanced Parallel Hybrid Processing Pipeline            │      │
+│  │                                                          │      │
+│  │  Step 1: Parallel Retrieval (parallel_hybrid.py)         │      │
+│  │  ┌─────────────────┐    ┌─────────────────────────┐      │      │
+│  │  │   VectorRAG     │    │      GraphRAG           │      │      │
+│  │  │  (tools/vector) │    │   (tools/cypher)        │      │      │
+│  │  │ async execution │    │   async execution       │      │      │
+│  │  └─────────────────┘    └─────────────────────────┘      │      │
+│  │                                                          │      │
+│  │  Step 2: Context Fusion (context_fusion.py)              │      │
+│  │  ┌──────────────────────────────────────────────────┐    │      │
+│  │  │  4 Fusion Strategies + Quality Analysis          │    │      │
+│  │  │  • Advanced Hybrid  • Weighted Linear            │    │      │
+│  │  │  • Max Confidence   • Adaptive Fusion            │    │      │
+│  │  └──────────────────────────────────────────────────┘    │      │
+│  │                                                          │      │
+│  │  Step 3: Template Generation (hybrid_templates.py)       │      │
+│  │  ┌──────────────────────────────────────────────────┐    │      │
+│  │  │  5 Template Types + Response Generation          │    │      │
+│  │  │  • Regulatory Compliance  • Research Based       │    │      │
+│  │  │  • Basic Hybrid          • Comparative Analysis  │    │      │
+│  │  │  • Confidence Weighted                           │    │      │
+│  │  └──────────────────────────────────────────────────┘    │      │
+│  └──────────────────────────────────────────────────────────┘      │
+│                                              │                     │
+│                                              ▼                     │
+│                                     ┌─────────────────┐            │
+│                                     │   Neo4j Aura    │            │
+│                                     │   Cloud Database│            │
+│                                     │  26,429+ nodes  │            │
+│                                     └─────────────────┘            │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## **Key Components**
 
-### **Core Files**
+### **Core API Module**
 
-#### **`bot.py`** (1,115 lines)
-Main Streamlit application providing:
-- **Chat Interface**: Real-time conversation with AI assistant
-- **Configuration Panel**: Live fusion strategy and template selection
-- **Performance Metrics**: Processing times and confidence scores
-- **Health Monitoring**: Backend service status and diagnostics
-- **Session Management**: Persistent user sessions with unique IDs
+#### **`main.py`**  
+Central FastAPI orchestration layer:
+- **API Endpoints**: RESTful endpoints for frontend communication
+- **Request/Response Models**: Pydantic models for data validation
+- **Health Monitoring**: Comprehensive health check system
+- **Session Management**: User session tracking and analytics
+- **Error Handling**: Graceful error recovery and reporting
 
-#### **`requirements.txt`** 
-Frontend-specific dependencies:
-```txt
-streamlit>=1.28.0
-requests>=2.31.0
+**Key Endpoints:**
+```python
+POST /generate_parallel_hybrid    # Primary AI processing endpoint
+GET  /health                     # Basic health check
+GET  /parallel_hybrid/health     # Advanced system health
+GET  /                          # Service information
 ```
 
-#### **`Dockerfile.frontend`** (208 lines)
-Production-ready container configuration:
+### **Advanced Parallel Hybrid Engine**
+
+#### **`parallel_hybrid.py`**  
+Core parallel processing implementation:
+- **Async Coordination**: Manages simultaneous VectorRAG and GraphRAG execution
+- **Performance Monitoring**: Real-time metrics collection and analysis
+- **Quality Assessment**: Automated evaluation of retrieval quality
+- **Error Recovery**: Circuit breaker patterns for fault tolerance
+
+**Key Functions:**
+```python
+async def get_parallel_retrieval(query, session_id)
+async def execute_parallel_search(vector_task, graph_task)
+async def monitor_performance(start_time, components)
+```
+
+#### **`context_fusion.py`**   
+Intelligent context fusion implementation:
+- **4 Fusion Strategies**: Research-based algorithms for combining results
+- **Quality Analysis**: Automated assessment of fusion effectiveness
+- **Complementarity Detection**: Analysis of how sources complement each other
+- **Confidence Scoring**: Advanced confidence calculation algorithms
+
+**Fusion Strategies:**
+```python
+class FusionStrategy(Enum):
+    ADVANCED_HYBRID = "advanced_hybrid"      # Research-based (recommended)
+    WEIGHTED_LINEAR = "weighted_linear"      # Confidence-based linear
+    MAX_CONFIDENCE = "max_confidence"        # Highest confidence selection
+    ADAPTIVE_FUSION = "adaptive_fusion"      # Dynamic strategy selection
+```
+
+#### **`hybrid_templates.py`**   
+Specialized response template system:
+- **5 Template Types**: Different response formats for various use cases
+- **Dynamic Generation**: AI-powered template selection and customization
+- **Quality Control**: Template-specific quality assessment
+- **Regulatory Focus**: MSHA compliance-oriented response formatting
+
+**Template Types:**
+```python
+class TemplateType(Enum):
+    REGULATORY_COMPLIANCE = "regulatory_compliance"  # Enhanced compliance
+    RESEARCH_BASED = "research_based"               # Academic methodology
+    BASIC_HYBRID = "basic_hybrid"                   # Simple combination
+    COMPARATIVE_ANALYSIS = "comparative_analysis"   # Source comparison
+    CONFIDENCE_WEIGHTED = "confidence_weighted"     # Quality-adjusted
+```
+
+### **Infrastructure Components**
+
+#### **`config.py`**   
+Comprehensive configuration management:
+- **Environment Variables**: Secure configuration loading
+- **API Key Management**: OpenAI, Gemini, Neo4j credential handling
+- **Settings Validation**: Pydantic-based configuration validation
+- **Secrets Integration**: Automatic `.streamlit/secrets.toml` loading
+
+#### **`database.py`**   
+Neo4j database integration:
+- **Connection Management**: Robust database connection handling
+- **Vector Search**: High-performance vector similarity search
+- **Graph Queries**: Cypher query execution and optimization
+- **Health Monitoring**: Database connectivity and performance monitoring
+
+#### **`llm.py`**   
+LLM integration and management:
+- **Multi-Provider Support**: OpenAI GPT-4o + Google Gemini integration
+- **Prompt Engineering**: Optimized prompts for regulatory compliance
+- **Rate Limiting**: API quota management and throttling
+- **Error Handling**: Graceful LLM service failure recovery
+
+#### **`circuit_breaker.py`**   
+Advanced fault tolerance system:
+- **Circuit Breaker Pattern**: Prevents cascading failures
+- **Health Monitoring**: Component-level health tracking
+- **Automatic Recovery**: Self-healing system capabilities
+- **Performance Tracking**: Real-time performance metrics
+
+#### **`utils.py`** (227 lines)
+Utility functions and helpers:
+- **Text Processing**: Document chunking and preprocessing
+- **Validation**: Input validation and sanitization
+- **Logging**: Structured logging and error reporting
+- **Performance**: Caching and optimization utilities
+
+### **Agent Tools Package**
+
+#### **`tools/`** Directory
+Specialized tools for knowledge graph querying:
+
+**`tools/vector.py`**   
+- **VectorRAG Implementation**: Semantic similarity search
+- **Embedding Generation**: Google Gemini embedding integration
+- **Performance Optimization**: Efficient vector operations
+- **Quality Assessment**: Relevance scoring and filtering
+
+**`tools/cypher.py`**   
+- **GraphRAG Implementation**: Knowledge graph traversal
+- **Cypher Generation**: Automated query generation from natural language
+- **Relationship Analysis**: Entity relationship exploration
+- **Performance Monitoring**: Query optimization and caching
+
+**`tools/general.py`**   
+- **General Query Processing**: Fallback query handling
+- **Multi-Source Integration**: Combines multiple data sources
+- **Quality Control**: Response validation and enhancement
+- **Error Recovery**: Graceful degradation for edge cases
+
+### **Production Components**
+
+#### **`Dockerfile.backend`**   
+Production-ready containerization:
 - **Multi-stage Build**: Optimized for production deployment
+- **Security**: Non-root user execution and security hardening
 - **Health Checks**: Container-level health monitoring
-- **Security**: Non-root user execution
-- **Port Configuration**: Streamlit default port 8501
+- **Performance**: Optimized for high-throughput processing
 
-#### **`.streamlit/config.toml`**
-Streamlit application configuration:
-- **UI Customization**: Theme and layout settings
-- **Performance**: Caching and optimization options
-- **Security**: CORS and authentication settings
-
-### **Key Functions**
-
-#### **Configuration Management**
-```python
-def display_parallel_hybrid_config():
-    """Real-time configuration panel for Advanced Parallel Hybrid settings"""
-    
-def get_session_id():
-    """Generate and manage unique session identifiers"""
-```
-
-#### **API Communication**
-```python
-def call_parallel_hybrid_api(user_input, session_id, fusion_strategy, template_type):
-    """Primary function for backend API communication"""
-    
-def handle_processing_error(error):
-    """Graceful error handling with user-friendly messages"""
-```
-
-#### **Performance Analytics**
-```python
-def display_parallel_hybrid_metrics(metadata):
-    """Comprehensive performance and quality metrics display"""
-    
-def get_confidence_level(score):
-    """Visual confidence score representation"""
-```
-
-#### **Health Monitoring**
-```python
-def display_system_health():
-    """Real-time backend service health monitoring"""
+#### **`requirements.txt`**   
+Comprehensive dependency management:
+```txt
+fastapi>=0.104.0           # Core API framework
+uvicorn>=0.24.0           # ASGI server
+neo4j>=5.15.0             # Graph database driver
+openai>=1.3.0             # OpenAI API integration
+google-generativeai       # Google Gemini integration
+langchain>=0.0.350        # LLM orchestration
+pydantic>=2.5.0           # Data validation
+asyncio                   # Async programming
 ```
 
 ---
 
-## **Configuration Options**
+## **API Documentation**
 
-### **Fusion Strategies**
-Users can select from 4 research-based fusion strategies:
-- **`advanced_hybrid`**: Research-based fusion with complementarity analysis (recommended)
-- **`weighted_linear`**: Confidence-based linear combination
-- **`max_confidence`**: Select highest confidence result with context
-- **`adaptive_fusion`**: Dynamic strategy selection based on content
+### **Core Endpoints**
 
-### **Template Types**
-5 specialized response templates available:
-- **`regulatory_compliance`**: Enhanced compliance-focused responses (recommended)
-- **`research_based`**: Academic methodology with citations
-- **`basic_hybrid`**: Simple combination template
-- **`comparative_analysis`**: Source complementarity display
-- **`confidence_weighted`**: Quality-adjusted responses
+#### **POST /generate_parallel_hybrid**
+Primary endpoint for Advanced Parallel Hybrid processing:
 
-### **System Settings**
-- **Session Persistence**: Automatic session ID generation and management
-- **Error Recovery**: Graceful fallback for backend connectivity issues
-- **Performance Tracking**: Real-time metrics collection and display
-- **Quality Assessment**: Automated response quality evaluation
+**Request Model:**
+```python
+class ParallelHybridRequest(BaseModel):
+    user_input: str                    # REQUIRED: Natural language query
+    session_id: Optional[str] = None   # OPTIONAL: Session identifier  
+    fusion_strategy: Optional[str] = "advanced_hybrid"  # Fusion algorithm
+    template_type: Optional[str] = "regulatory_compliance"  # Response template
+```
+
+**Response Model:**
+```python
+class ParallelHybridResponse(BaseModel):
+    response: str                      # Generated AI response
+    processing_time: float             # Total processing time (seconds)
+    session_id: str                   # Session identifier
+    metadata: Dict[str, Any]          # Detailed processing metadata
+```
+
+**Usage Example:**
+```bash
+curl -X POST http://localhost:8000/generate_parallel_hybrid \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_input": "What safety equipment is required for underground coal mining?",
+    "fusion_strategy": "advanced_hybrid",
+    "template_type": "regulatory_compliance"
+  }'
+```
+
+#### **GET /health**
+Basic health check endpoint:
+```python
+{
+  "status": "healthy",
+  "timestamp": "2025-01-XX 12:00:00 UTC",
+  "uptime_seconds": 3600,
+  "version": "2.0.0"
+}
+```
+
+#### **GET /parallel_hybrid/health**
+Comprehensive system health check:
+```python
+{
+  "status": "healthy",
+  "parallel_hybrid_ready": true,
+  "components": {
+    "database": {"status": "healthy", "response_time": 0.05},
+    "vector_search": {"status": "healthy", "index_size": 5575},
+    "graph_queries": {"status": "healthy", "node_count": 26429},
+    "llm_services": {"status": "healthy", "providers": ["openai", "gemini"]},
+    "fusion_engine": {"status": "healthy", "strategies": 4}
+  },
+  "performance": {
+    "avg_response_time": 35.2,
+    "success_rate": 0.98,
+    "error_rate": 0.02
+  }
+}
+```
+
+---
+
+## **Configuration**
+
+### **Environment Variables**
+
+#### **Required Configuration**
+```bash
+# Core API Keys
+OPENAI_API_KEY=sk-your-openai-key
+GEMINI_API_KEY=your-gemini-key
+
+# Neo4j Database
+NEO4J_URI=neo4j+s://your-instance.databases.neo4j.io  
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-password
+
+# Optional Settings
+MRCA_DEBUG=false
+FUSION_DEFAULT_STRATEGY=advanced_hybrid
+TEMPLATE_DEFAULT_TYPE=regulatory_compliance
+```
+
+#### **Advanced Configuration**
+```bash
+# Performance Tuning
+MAX_CONCURRENT_REQUESTS=10
+REQUEST_TIMEOUT_SECONDS=300
+VECTOR_SEARCH_LIMIT=20
+GRAPH_TRAVERSAL_DEPTH=3
+
+# Circuit Breaker Settings
+CIRCUIT_BREAKER_FAILURE_THRESHOLD=5
+CIRCUIT_BREAKER_RECOVERY_TIMEOUT=60
+CIRCUIT_BREAKER_EXPECTED_EXCEPTION_TOLERANCE=0.1
+
+# Logging
+LOG_LEVEL=INFO
+LOG_FORMAT=structured
+ENABLE_PERFORMANCE_LOGGING=true
+```
+
+### **Secrets Configuration**
+The backend automatically loads configuration from multiple `.streamlit/secrets.toml` locations in priority order:
+
+1. **`.streamlit/secrets.toml`** (project root - preferred for backend/Docker)
+2. **`../streamlit/secrets.toml`** (parent directory fallback)
+3. **`frontend/.streamlit/secrets.toml`** (frontend directory fallback)
+
+**Setup Instructions:**
+```bash
+# Copy template to both required locations
+cp .streamlit/secrets.toml.template .streamlit/secrets.toml
+cp .streamlit/secrets.toml.template frontend/.streamlit/secrets.toml
+
+# Edit both files with your actual credentials
+```
+
+**Configuration Format:**
+```toml
+# OpenAI Configuration
+OPENAI_API_KEY = "sk-your-openai-api-key"
+
+# Google Gemini Configuration
+GEMINI_API_KEY = "your-gemini-api-key"
+GEMINI_MODEL = "gemini-2.5-pro"
+
+# Neo4j Database Configuration
+NEO4J_URI = "neo4j+s://your-database.databases.neo4j.io"
+NEO4J_USERNAME = "neo4j"
+NEO4J_PASSWORD = "your-password"
+
+# Advanced Parallel Hybrid Configuration
+FUSION_DEFAULT_STRATEGY = "advanced_hybrid"
+TEMPLATE_DEFAULT_TYPE = "regulatory_compliance"
+```
+
+**Important Notes:**
+- Both secrets files are required for proper operation
+- Root `.streamlit/secrets.toml` is used by backend and Docker
+- Frontend `.streamlit/secrets.toml` is used by Streamlit when running directly
+- Both files are automatically ignored by git (.gitignore)
 
 ---
 
 ## **Usage**
 
-### **Quick Start**
+### **Development Setup**
 ```bash
-# Navigate to frontend directory
-cd frontend
+# Navigate to backend directory
+cd backend
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run Streamlit application
-streamlit run bot.py
+# Configure secrets
+# Ensure BOTH secrets files exist with valid API keys:
+# - .streamlit/secrets.toml (project root)
+# - frontend/.streamlit/secrets.toml (frontend directory)
 
-# Access application
-# Open browser to: http://localhost:8501
+# Run development server
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# Access API documentation
+# http://localhost:8000/docs
 ```
 
 ### **Docker Usage**
 ```bash
-# Build frontend container
-docker build -f Dockerfile.frontend -t mrca-frontend .
+# Build backend container
+docker build -f Dockerfile.backend -t mrca-backend .
 
 # Run container
-docker run -p 8501:8501 \
-  -e BACKEND_URL=http://backend:8000 \
-  mrca-frontend
+docker run -p 8000:8000 \
+  -e OPENAI_API_KEY=your-key \
+  -e GEMINI_API_KEY=your-key \
+  -e NEO4J_URI=your-uri \
+  -e NEO4J_USERNAME=neo4j \
+  -e NEO4J_PASSWORD=your-password \
+  mrca-backend
 
-# Access application
-# Open browser to: http://localhost:8501
+# Access API
+# http://localhost:8000/docs
 ```
 
-### **Integration**
-The frontend communicates with the backend via HTTP API:
-```python
-# Primary API endpoint
-POST http://backend:8000/generate_parallel_hybrid
+### **Module Execution**
+```bash
+# Run as Python module (recommended for imports)
+python -m uvicorn backend.main:app --reload
 
-# Health monitoring  
-GET http://backend:8000/health
-GET http://backend:8000/parallel_hybrid/health
+# Run directly from backend directory
+cd backend
+uvicorn main:app --reload
 ```
 
 ---
 
-## **Environment Variables**
+## **Performance Metrics**
 
-### **Required Configuration**
-```bash
-# Backend API Configuration
-BACKEND_URL=http://localhost:8000        # Direct URL (development)
-BACKEND_HOST=your-backend-host.com       # Host only (Render deployment)
+### **System Capabilities**
 
-# Optional Settings
-STREAMLIT_SERVER_PORT=8501              # Custom port
-STREAMLIT_SERVER_ADDRESS=0.0.0.0       # Bind address
-```
+#### **Processing Performance**
+- **Average Response Time**: 30-45 seconds (comprehensive analysis)
+- **Parallel Efficiency**: ~2x faster than sequential processing
+- **Concurrent Users**: Up to 10 simultaneous requests
+- **Throughput**: 80-120 queries per hour (production scale)
 
-### **Deployment-Specific**
-```bash
-# Render Cloud Platform
-BACKEND_HOST=mrca-backend.onrender.com
-
-# Docker Compose
-BACKEND_URL=http://backend:8000
-
-# Local Development  
-BACKEND_URL=http://localhost:8000
-```
-
----
-
-## **User Interface Features**
-
-### **Chat Interface**
-- **Natural Language Queries**: Ask questions about mining regulations
-- **Conversation History**: Persistent chat session with context
-- **Message Formatting**: Professional response display with metadata
-- **Error Handling**: User-friendly error messages and recovery
-
-### **Configuration Panel**
-- **Live Settings**: Real-time fusion strategy selection
-- **Template Choice**: Dynamic response template configuration
-- **Performance Mode**: Choose between Traditional Agent and Advanced Parallel Hybrid
-- **Quality Control**: Confidence thresholds and quality settings
-
-### **Analytics Dashboard**
-- **Processing Metrics**: Response times and performance data
-- **Confidence Scores**: Vector, Graph, and overall confidence levels
+#### **Quality Metrics**
+- **Confidence Scoring**: 0-100% accuracy assessment
+- **Success Rate**: 98%+ successful responses
+- **Error Rate**: <2% system errors
 - **Quality Assessment**: Automated response quality evaluation
-- **Fusion Analysis**: Breakdown of VectorRAG vs GraphRAG contributions
 
-### **Health Monitoring**
-- **Backend Status**: Real-time backend service connectivity
-- **Component Health**: Individual system component status
-- **Performance Tracking**: Historical performance metrics
-- **Error Monitoring**: System error rates and diagnostics
+#### **Resource Usage**
+- **Memory**: 2-4 GB RAM (depending on concurrent load)
+- **CPU**: 2-4 cores (optimal performance)
+- **Network**: High-speed internet required for API calls
+- **Storage**: 500 MB for application + logs
+
+### **Advanced Parallel HybridRAG - Intelligent Fusion Metrics**
+
+#### **Retrieval Performance**
+```python
+{
+  "vector_search": {
+    "average_time": 2.3,        # seconds
+    "confidence_range": "0.85-0.95",
+    "results_returned": 15
+  },
+  "graph_search": {
+    "average_time": 5.8,        # seconds  
+    "confidence_range": "0.70-0.85",
+    "nodes_traversed": 150
+  },
+  "parallel_efficiency": 2.1,   # speedup vs sequential
+  "total_processing": 35.2      # seconds
+}
+```
+
+#### **Fusion Analysis**
+```python
+{
+  "fusion_strategy": "advanced_hybrid",
+  "fusion_quality": 0.92,
+  "complementarity_score": 0.87,
+  "final_confidence": 1.0,
+  "vector_contribution": 0.65,
+  "graph_contribution": 0.35
+}
+```
 
 ---
 
@@ -293,33 +519,56 @@ BACKEND_URL=http://localhost:8000
 ### **Local Development**
 ```bash
 # Setup development environment
-cd frontend
+cd backend
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate     # Windows
+
 pip install -r requirements.txt
 
-# Run with hot reload
-streamlit run bot.py --server.runOnSave true
+# Run with auto-reload
+uvicorn main:app --reload --log-level debug
 
-# Access development server
-# http://localhost:8501
+# Access interactive API docs
+# http://localhost:8000/docs
 ```
 
 ### **Testing**
 ```bash
-# Run frontend tests
-python test_frontend.py
+# Health check
+curl http://localhost:8000/health
 
-# Manual testing checklist:
-# - Backend connectivity
-# - Configuration panel functionality  
-# - Chat interface responsiveness
-# - Health monitoring accuracy
-# - Error handling robustness
+# Advanced health check
+curl http://localhost:8000/parallel_hybrid/health
+
+# Test parallel hybrid endpoint
+curl -X POST http://localhost:8000/generate_parallel_hybrid \
+  -H "Content-Type: application/json" \
+  -d '{"user_input": "What are methane monitoring requirements?"}'
 ```
 
-### **Dependencies**
-```txt
-streamlit>=1.28.0           # Core UI framework
-requests>=2.31.0            # HTTP API communication
+### **Adding New Features**
+
+#### **New Fusion Strategy**
+```python
+# Add to context_fusion.py
+class FusionStrategy(Enum):
+    YOUR_STRATEGY = "your_strategy"
+
+async def your_fusion_strategy(vector_result, graph_result):
+    # Implement your fusion logic
+    pass
+```
+
+#### **New Template Type**
+```python
+# Add to hybrid_templates.py
+class TemplateType(Enum):
+    YOUR_TEMPLATE = "your_template"
+
+def create_your_template(context, metadata):
+    # Implement your template logic
+    pass
 ```
 
 ---
@@ -328,117 +577,166 @@ requests>=2.31.0            # HTTP API communication
 
 ### **Common Issues**
 
-#### **Backend Connection Failed**
+#### **Configuration Errors**
 ```
-Error: Connection refused to backend API
+Error: Configuration validation failed
 ```
-**Solution**: 
-- Verify backend is running on correct port
-- Check BACKEND_URL environment variable
-- Test API endpoint manually: `curl http://backend:8000/health`
+**Solution**:
+- Verify **both** secrets files exist and contain valid API keys:
+  - `.streamlit/secrets.toml` (project root)
+  - `frontend/.streamlit/secrets.toml` (frontend directory)
+- Check environment variables are properly set
+- Validate Neo4j database connectivity
+- Ensure secrets files are not using placeholder values
 
-#### **Slow Response Times**
+#### **Database Connection Issues**
+```
+Error: Failed to connect to Neo4j database
+```
+**Solution**:
+- Verify Neo4j URI format: `neo4j+s://hostname:7687`
+- Check username/password credentials
+- Test database connectivity: `neo4j cypher-shell`
+
+#### **API Rate Limiting**
+```
+Error: OpenAI API rate limit exceeded
+```
+**Solution**:
+- Monitor API usage and quotas
+- Implement request throttling
+- Consider upgrading API tier
+
+#### **Performance Issues**
 ```
 Warning: Response time > 60 seconds
 ```
 **Solution**:
-- Check backend performance metrics
-- Verify Neo4j database connectivity  
-- Monitor API key quotas and rate limits
+- Check Neo4j database performance
+- Monitor API response times
+- Verify system resource availability
 
-#### **Configuration Not Saving**
-```
-Issue: Settings reset on page refresh
-```
-**Solution**:
-- Verify session state management
-- Check browser local storage
-- Clear Streamlit cache: `streamlit cache clear`
+### **Debugging**
 
-### **Health Checks**
+#### **Enable Debug Logging**
+```bash
+export MRCA_DEBUG=true
+export LOG_LEVEL=DEBUG
+uvicorn main:app --log-level debug
+```
+
+#### **Circuit Breaker Status**
 ```python
-# Manual health verification
+# Check circuit breaker health
 import requests
-
-# Test backend connectivity
-response = requests.get("http://localhost:8000/health")
-print(f"Backend Status: {response.status_code}")
-
-# Test Advanced Parallel Hybrid system
 response = requests.get("http://localhost:8000/parallel_hybrid/health")
-print(f"Parallel Hybrid Status: {response.json()}")
+print(response.json()["components"])
 ```
 
----
-
-## **Performance Optimization**
-
-### **Frontend Performance**
-- **Caching**: Aggressive caching of API responses and configuration
-- **Lazy Loading**: Components loaded on demand
-- **Session Management**: Efficient session state handling
-- **Resource Optimization**: Minimal JavaScript and CSS overhead
-
-### **Metrics Tracking**
-- **Response Times**: User interaction to response completion
-- **API Latency**: Backend communication performance
-- **UI Responsiveness**: Frontend rendering performance
-- **Error Rates**: System reliability metrics
+#### **Performance Monitoring**
+```python
+# Monitor processing metrics
+response = requests.post("http://localhost:8000/generate_parallel_hybrid", 
+                        json={"user_input": "test query"})
+metadata = response.json()["metadata"]
+print(f"Processing time: {metadata['processing_time']}")
+```
 
 ---
 
 ## **Security**
 
 ### **Security Features**
-- **Session Isolation**: Unique session IDs prevent data leakage
-- **Input Validation**: Sanitized user input processing
-- **HTTPS Ready**: TLS/SSL support for production deployment
-- **Environment Variables**: Secure configuration management
+
+#### **API Security**
+- **Input Validation**: Pydantic model validation for all requests
+- **Rate Limiting**: Request throttling to prevent abuse
+- **CORS Configuration**: Secure cross-origin resource sharing
+- **Environment Variables**: Secure credential management
+
+#### **Database Security**
+- **Encrypted Connections**: TLS/SSL for all Neo4j connections
+- **Authentication**: Username/password authentication
+- **Access Control**: Read-only database access for safety
+
+#### **LLM Security**
+- **API Key Protection**: Secure credential storage
+- **Request Validation**: Input sanitization and validation
+- **Error Information**: Limited error details to prevent information disclosure
 
 ### **Best Practices**
-- **No Credential Storage**: Frontend never stores API keys
-- **Secure Communication**: All backend communication via HTTPS in production
-- **Session Expiry**: Automatic session cleanup
-- **Error Information**: Limited error details to prevent information disclosure
+- **Secrets Management**: Never commit API keys to version control
+- **HTTPS Only**: Use HTTPS in production deployment
+- **Regular Updates**: Keep dependencies updated for security patches
+- **Monitoring**: Comprehensive logging and error tracking
 
 ---
 
 ## **Deployment**
 
 ### **Production Deployment**
-```bash
-# Render Cloud Platform
-git push origin main
-# Automatic deployment via render.yaml
 
-# Manual Docker Deployment
-docker build -f Dockerfile.frontend -t mrca-frontend .
-docker run -p 8501:8501 mrca-frontend
+#### **Render Cloud Platform**
+```yaml
+# render.yaml
+services:
+  - type: web
+    name: mrca-backend
+    env: python
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY  
+        sync: false
+      - key: NEO4J_URI
+        sync: false
 ```
 
-### **Configuration Management**
-- **Environment-Specific**: Different configurations per deployment environment
-- **Health Checks**: Container and application-level health monitoring
-- **Scaling**: Horizontal scaling support for high traffic
-- **Monitoring**: Comprehensive logging and metrics collection
+#### **Docker Production**
+```bash
+# Build production image
+docker build -f Dockerfile.backend -t mrca-backend:latest .
+
+# Run with production settings
+docker run -d \
+  --name mrca-backend \
+  -p 8000:8000 \
+  --env-file .env.production \
+  --restart unless-stopped \
+  mrca-backend:latest
+```
+
+#### **Performance Optimization**
+```bash
+# Production uvicorn settings
+uvicorn main:app \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --workers 4 \
+  --worker-class uvicorn.workers.UvicornWorker \
+  --access-log \
+  --log-level info
+```
 
 ---
 
 ## **Contributing**
 
 ### **Development Guidelines**
-1. **Follow Streamlit Best Practices**: Efficient state management and caching
-2. **Maintain UI/UX Standards**: Consistent design and user experience
-3. **Test Thoroughly**: Frontend functionality and backend integration
-4. **Document Changes**: Update README for new features or modifications
+1. **Follow FastAPI Best Practices**: Async/await patterns and dependency injection
+2. **Maintain Type Hints**: Comprehensive type annotations for all functions
+3. **Test Thoroughly**: Unit tests for all components and integration tests
+4. **Document Changes**: Update README and API documentation
 
-### **UI/UX Standards**
-- **Responsive Design**: Mobile and desktop compatibility
-- **Accessibility**: WCAG compliance for inclusive design
-- **Performance**: Sub-2-second response times for UI interactions
-- **Professional Appearance**: Clean, modern interface design
+### **Research Opportunities**
+- **New Fusion Algorithms**: Machine learning-based fusion strategies
+- **Performance Optimization**: GPU acceleration and distributed processing
+- **Advanced NLP**: Improved entity extraction and relationship modeling
+- **Quality Metrics**: Enhanced response quality assessment algorithms
 
 ---
 
-© 2025 Alexander Samuel Ricciardi - MRCA Frontend Module  
+© 2025 Alexander Samuel Ricciardi - MRCA Backend Module  
 License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion System 
