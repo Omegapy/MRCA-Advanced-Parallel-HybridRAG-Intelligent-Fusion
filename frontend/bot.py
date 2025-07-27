@@ -257,7 +257,7 @@ def display_disclaimer() -> None:
     st.markdown("""
     <div class="disclaimer">
         <h4>⚠️ Important Legal Disclaimer</h4>
-        <p><strong>MRCA provides information and guidance only - It does not providelegal or health advice.</strong>
+        <p><strong>MRCA provides information and guidance only - It does not provide legal or health advice.</strong>
         Always consult the official Code of Federal Regulations (CFR) and qualified legal counsel for
         authoritative regulatory interpretation. MRCA is a research tool to help understand mining safety
         regulations but does not replace official MSHA guidance or legal consultation.</p>
@@ -305,7 +305,7 @@ def display_parallel_hybrid_config() -> None:
     }
 
     template_descriptions = {
-        "regulatory_compliance": "**Regulatory Compliance**: Enhanced compliance-focused with mine-type awareness and urgency assessment",
+        "regulatory_compliance": "**Regulatory Compliance**: Mine-type specific regulations and regulations urgency assessment",
         "research_based": "**Research-Based**: Research-based template with methodology notes",
         "basic_hybrid": "**Basic Hybrid**: Simple combination template",
         "comparative_analysis": "**Comparative Analysis**: Shows source complementarity",

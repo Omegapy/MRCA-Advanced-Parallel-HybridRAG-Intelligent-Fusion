@@ -145,7 +145,7 @@ class DevContainerLauncher:
             time.sleep(2)
         except Exception as e:
             print(f"Note: {e}")
-        print("✅ Process cleanup complete")
+        print("Process cleanup complete")
     # --------------------------------------------------------------------------------- end cleanup_processes()
 
     # --------------------------------------------------------------------------------- start_backend()
@@ -182,7 +182,7 @@ class DevContainerLauncher:
             creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0  # Windows equivalent
         )
         
-        print(f"✅ Backend server starting on http://0.0.0.0:{BACKEND_PORT}")
+        print(f"Backend server starting on http://0.0.0.0:{BACKEND_PORT}")
         return True
     # --------------------------------------------------------------------------------- end start_backend()
 
@@ -197,7 +197,7 @@ class DevContainerLauncher:
         Returns:
             bool: True if frontend process started successfully, False otherwise
         """
-        print("🚀 Starting frontend server...")
+        print("Starting frontend server...")
         
         frontend_cmd = [
             sys.executable, "-m", "streamlit", "run",
@@ -222,7 +222,7 @@ class DevContainerLauncher:
             creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0  # Windows equivalent
         )
         
-        print(f"✅ Frontend server starting on http://0.0.0.0:{FRONTEND_PORT}")
+        print(f"Frontend server starting on http://0.0.0.0:{FRONTEND_PORT}")
         return True
     # --------------------------------------------------------------------------------- end start_frontend()
 

@@ -131,7 +131,7 @@ def install_dependencies() -> bool:
 
     Examples:
         >>> install_dependencies()
-        📦 Installing dependencies...
+        Installing dependencies...
         ✅ Backend dependencies installed
         ✅ Streamlit installed
         True
@@ -170,12 +170,12 @@ def wait_for_services() -> None:
 
     Examples:
         >>> wait_for_services()
-        ⏳ Waiting for services to start...
+        Waiting for services to start...
         ✅ Backend is healthy
         ✅ Frontend is healthy
         ✅ Services should be ready!
     """
-    print("⏳ Waiting for services to start...")
+    print("Waiting for services to start...")
     time.sleep(8)  # Give more time for services to start
     
     try:
@@ -185,7 +185,7 @@ def wait_for_services() -> None:
         try:
             response = requests.get("http://localhost:8000/health", timeout=10)
             if response.status_code == 200:
-                print("✅ Backend is healthy")
+                print("Backend is healthy")
             else:
                 print("⚠️ Backend may not be fully ready")
         except Exception as e:
@@ -227,10 +227,10 @@ def launch_backend():
 
     Examples:
         >>> backend_proc = launch_backend()
-        🚀 Starting backend server...
+        Starting backend server...
         ✅ Backend server starting on http://localhost:8000
     """
-    print("🚀 Starting backend server...")
+    print("Starting backend server...")
     
     try:
         # Set PYTHONPATH to include the project root
@@ -268,11 +268,11 @@ def launch_frontend():
 
     Examples:
         >>> frontend_proc = launch_frontend()
-        🚀 Starting frontend server...
-        ✅ Frontend server starting on http://localhost:8501
-        🌐 Opening browser automatically...
+        Starting frontend server...
+        Frontend server starting on http://localhost:8501
+        Opening browser automatically...
     """
-    print("🚀 Starting frontend server...")
+    print("Starting frontend server...")
     frontend_dir = Path("frontend")
     
     if not frontend_dir.exists():
@@ -299,7 +299,7 @@ def launch_frontend():
         ], cwd=frontend_dir, env=env)
         
         print("✅ Frontend server starting on http://localhost:8501")
-        print("🌐 Browser should open automatically...")
+        print("Browser should open automatically...")
         return frontend_process
     except Exception as e:
         print(f"❌ Failed to start frontend: {e}")
@@ -316,10 +316,10 @@ def cleanup_existing_processes() -> None:
 
     Examples:
         >>> cleanup_existing_processes()
-        🧹 Cleaning up existing processes...
-        ✅ Stopped existing backend processes
-        ✅ Stopped existing frontend processes
-        ✅ Process cleanup complete
+        Cleaning up existing processes...
+        Stopped existing backend processes
+        Stopped existing frontend processes
+        Process cleanup complete
     """
     print("🧹 Cleaning up existing processes...")
     
@@ -328,18 +328,18 @@ def cleanup_existing_processes() -> None:
         result_uvicorn = subprocess.run(['pkill', '-f', 'uvicorn'], 
                                        capture_output=True, text=True)
         if result_uvicorn.returncode == 0:
-            print("  ✅ Stopped existing backend processes")
+            print("  Stopped existing backend processes")
         
         # Kill existing streamlit processes (frontend)  
         result_streamlit = subprocess.run(['pkill', '-f', 'streamlit'], 
                                          capture_output=True, text=True)
         if result_streamlit.returncode == 0:
-            print("  ✅ Stopped existing frontend processes")
+            print("  Stopped existing frontend processes")
             
         # Wait a moment for processes to fully terminate
         time.sleep(2)
         
-        print("✅ Process cleanup complete")
+        print("Process cleanup complete")
         
     except Exception as e:
         print(f"⚠️  Process cleanup warning: {e}")
@@ -364,12 +364,12 @@ def main() -> int:
 
     Examples:
         >>> main()
-        🎯 MRCA Advanced Parallel Hybrid Application Launcher (Fixed)
+        MRCA Advanced Parallel Hybrid Application Launcher (Fixed)
         =================================================================
-        🎉 MRCA Application Launched Successfully!
+        MRCA Application Launched Successfully!
         0
     """
-    print("🎯 MRCA Advanced Parallel Hybrid Application Launcher (Fixed)")
+    print("MRCA Advanced Parallel Hybrid Application Launcher (Fixed)")
     print("=" * 65)
     
     # Check if we're in the right directory
@@ -382,7 +382,7 @@ def main() -> int:
     
     # Check and install dependencies if needed
     if not check_dependencies():
-        print("📦 Installing missing dependencies...")
+        print("Installing missing dependencies...")
         if not install_dependencies():
             print("❌ Failed to install dependencies")
             return 1
@@ -406,29 +406,29 @@ def main() -> int:
         # Wait for services
         wait_for_services()
         
-        print("\n🎉 MRCA Application Launched Successfully!")
+        print("\nMRCA Application Launched Successfully!")
         print("=" * 65)
-        print("📊 Frontend UI (Primary Access): http://localhost:8501")
-        print("🔧 Backend API: http://localhost:8000")
-        print("📋 API Documentation: http://localhost:8000/docs")
-        print("💚 Health Check: http://localhost:8000/health")
+        print("Frontend UI (Primary Access): http://localhost:8501")
+        print("Backend API: http://localhost:8000")
+        print("API Documentation: http://localhost:8000/docs")
+        print("Health Check: http://localhost:8000/health")
         print("=" * 65)
         
         # Browser opening instructions
-        print("🌐 BROWSER ACCESS:")
-        print("   🚀 Browser should open automatically!")
-        print("   📱 If browser doesn't open, manually visit: http://localhost:8501")
-        print("   🐳 For dev containers: Use the PORTS tab or port forwarding")
+        print("BROWSER ACCESS:")
+        print("   Browser should open automatically!")
+        print("   If browser doesn't open, manually visit: http://localhost:8501")
+        print("   For dev containers: Use the PORTS tab or port forwarding")
         
-        print("\n✅ Browser auto-opening enabled for immediate access")
+        print("\nBrowser auto-opening enabled for immediate access")
         
-        print("\n✨ Advanced Parallel Hybrid Technology Ready!")
+        print("\nAdvanced Parallel Hybrid Technology Ready!")
         print("   - Dual AI processing modes")
         print("   - 4 fusion strategies available") 
         print("   - 5 template types for regulatory compliance")
         print("   - Real-time performance analytics")
         print("   - Neo4j knowledge graph integration")
-        print("\n⌨️  Press Ctrl+C to stop all services")
+        print("\nPress Ctrl+C to stop all services")
         
         # Monitor processes and wait for user to stop
         try:
@@ -439,12 +439,12 @@ def main() -> int:
                         print(f"⚠️ Process {i} (PID {process.pid}) has stopped unexpectedly")
                         # Try to restart the process
                         if i == 0:  # Backend process
-                            print("🔄 Attempting to restart backend...")
+                            print("Attempting to restart backend...")
                             new_process = launch_backend()
                             if new_process:
                                 processes[i] = new_process
                         elif i == 1:  # Frontend process
-                            print("🔄 Attempting to restart frontend...")
+                            print("Attempting to restart frontend...")
                             new_process = launch_frontend()
                             if new_process:
                                 processes[i] = new_process

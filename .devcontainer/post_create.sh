@@ -15,10 +15,23 @@ echo "Creating necessary directories..."
 mkdir -p data
 mkdir -p .streamlit
 
+# Create secrets file if it doesn't exist
+if [ ! -f ".streamlit/secrets.toml" ]; then
+    echo "Creating default secrets.toml from template..."
+    cp .streamlit/secrets.toml.template .streamlit/secrets.toml
+    echo "⚠️  Please edit .streamlit/secrets.toml with your actual API keys and credentials"
+fi
+
 # Set proper permissions
 echo "Setting permissions..."
-chmod +x launch_app.py
-chmod +x launch.sh
+if [ -f "launch_app.py" ]; then
+    chmod +x launch_app.py 2>/dev/null || echo "Note: Could not set execute permissions on launch_app.py (may not be needed)"
+fi
+if [ -f "launch.sh" ]; then
+    chmod +x launch.sh 2>/dev/null || echo "Note: Could not set execute permissions on launch.sh"
+else
+    echo "Note: launch.sh not found (not required for operation)"
+fi
 
 # Initialize Docker service (Docker-in-Docker)
 echo "Initializing Docker service..."

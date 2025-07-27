@@ -37,13 +37,29 @@
 		"vscode": {
 			"settings": {
 				"python.createEnvironment.trigger": "off",
-				"remote.autoForwardPortsSource": "none"
+				"remote.autoForwardPortsSource": "none",
+				"editor.tokenColorCustomizations": {
+    				"textMateRules": [
+      					{
+        					"scope": "comment",
+        					"settings": {
+          						"foreground": "#99989b" // comments color
+        	    			}
+      					},
+						{
+                			"scope": "string.quoted.docstring.multi.python",
+                			"settings": {
+                    		     "foreground": "#99989b" // docstrings color
+                			}
+            			}
+    				]
+  				}
 			},
 			"extensions": [
 				"ms-python.python",
 				"ms-python.debugpy",
 				"ms-azuretools.vscode-docker"
-				]
+			]
 		}
 	}
 }
