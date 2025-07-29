@@ -75,7 +75,7 @@ Preview:
 
 | | |
 |---|---|
-| <img width="350" src="https://github.com/user-attachments/assets/2ebfeed2-ba58-4cef-a6e1-9288ff76eaf2"> | <img width="350" src="https://github.com/user-attachments/assets/9c59f5c4-b661-4048-af6e-02669a501dc9">
+| <img width="350" src="https://github.com/user-attachments/assets/2ebfeed2-ba58-4cef-a6e1-9288ff76eaf2" style="border: 5px solid grey;"> | <img width="350" src="https://github.com/user-attachments/assets/9c59f5c4-b661-4048-af6e-02669a501dc9" style="border: 5px solid grey;">
 
 ---
 
