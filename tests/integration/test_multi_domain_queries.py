@@ -97,6 +97,7 @@ class TestMultiDomainQueries:
         }
     ]
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_primary_multi_domain_query(
         self, 
@@ -117,7 +118,7 @@ class TestMultiDomainQueries:
         performance_timer.start()
         
         # Make API request to Advanced Parallel Hybrid endpoint
-        async with httpx.AsyncClient(timeout=TEST_TIMEOUT_MEDIUM) as client:
+        async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.post(
                 f"{backend_url}/generate_parallel_hybrid",
                 json={
@@ -137,10 +138,16 @@ class TestMultiDomainQueries:
         
         # Validate response structure
         assert "response" in response_data, "Response missing 'response' field"
-        assert "vector_confidence" in response_data, "Response missing vector confidence"
-        assert "graph_confidence" in response_data, "Response missing graph confidence"  
-        assert "final_confidence" in response_data, "Response missing final confidence"
-        assert "fusion_ready" in response_data, "Response missing fusion ready status"
+        assert "metadata" in response_data, "Response missing metadata"
+
+        # Extract confidence scores from nested metadata structure
+        parallel_retrieval = response_data["metadata"]["parallel_retrieval"]
+        context_fusion = response_data["metadata"]["context_fusion"]
+
+        assert "vector_confidence" in parallel_retrieval, "Response missing vector confidence"
+        assert "graph_confidence" in parallel_retrieval, "Response missing graph confidence"
+        assert "final_confidence" in context_fusion, "Response missing final confidence"
+        assert "fusion_ready" in parallel_retrieval, "Response missing fusion ready status"
         
         response_text = response_data["response"]
         
@@ -184,7 +191,7 @@ class TestMultiDomainQueries:
         )
         
         # 5. Fusion readiness should be true for multi-domain queries
-        assert response_data["fusion_ready"] is True, (
+        assert parallel_retrieval["fusion_ready"] is True, (
             "Multi-domain queries should have fusion_ready=True"
         )
         
@@ -194,7 +201,9 @@ class TestMultiDomainQueries:
         print(f"   Fusion Quality: {fusion_quality:.3f}")
         print(f"   Interaction Coverage: {interaction_coverage:.1%}")
         print(f"   Response Time: {elapsed_time:.2f}s")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_multiple_multi_domain_scenarios(
         self, 
@@ -208,7 +217,7 @@ class TestMultiDomainQueries:
         for test_case in self.MULTI_DOMAIN_QUERIES:
             print(f"\nTesting: {test_case['description']}")
             
-            async with httpx.AsyncClient(timeout=TEST_TIMEOUT_MEDIUM) as client:
+            async with httpx.AsyncClient(timeout=60.0) as client:
                 response = await client.post(
                     f"{backend_url}/generate_parallel_hybrid",
                     json={
@@ -234,13 +243,17 @@ class TestMultiDomainQueries:
             # Calculate fusion quality
             fusion_quality = self._calculate_fusion_quality(response_data)
             
+            # Extract confidence scores from nested structure
+            parallel_retrieval = response_data["metadata"]["parallel_retrieval"]
+            context_fusion = response_data["metadata"]["context_fusion"]
+
             results.append({
                 "query": test_case["query"],
                 "cfr_sections_found": len(cfr_sections),
                 "cfr_sections": list(cfr_sections),
                 "domain_coverage": domain_coverage,
                 "fusion_quality": fusion_quality,
-                "final_confidence": response_data["final_confidence"],
+                "final_confidence": context_fusion["final_confidence"],
                 "meets_requirements": (
                     len(cfr_sections) >= min_sections and
                     domain_coverage >= 0.5 and
@@ -273,7 +286,9 @@ class TestMultiDomainQueries:
         print(f"   Success rate: {success_rate:.1%}")
         print(f"   Average fusion quality: {avg_fusion_quality:.3f}")
         print(f"   Average CFR sections: {avg_cfr_sections:.1f}")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_fusion_strategy_comparison(
         self, 
@@ -288,7 +303,7 @@ class TestMultiDomainQueries:
         strategy_results = {}
         
         for strategy in fusion_strategies:
-            async with httpx.AsyncClient(timeout=TEST_TIMEOUT_MEDIUM) as client:
+            async with httpx.AsyncClient(timeout=60.0) as client:
                 response = await client.post(
                     f"{backend_url}/generate_parallel_hybrid",
                     json={
@@ -305,10 +320,13 @@ class TestMultiDomainQueries:
             cfr_sections = self._extract_cfr_sections(response_text)
             fusion_quality = self._calculate_fusion_quality(response_data)
             
+            # Extract confidence scores from nested structure
+            context_fusion = response_data["metadata"]["context_fusion"]
+
             strategy_results[strategy] = {
                 "cfr_sections": len(cfr_sections),
                 "fusion_quality": fusion_quality,
-                "final_confidence": response_data["final_confidence"],
+                "final_confidence": context_fusion["final_confidence"],
                 "response_length": len(response_text)
             }
         
@@ -324,7 +342,9 @@ class TestMultiDomainQueries:
             print(f"   {strategy}: quality={result['fusion_quality']:.3f}, "
                   f"cfr_sections={result['cfr_sections']}, "
                   f"confidence={result['final_confidence']:.3f}")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_boundary_multi_domain_cases(
         self, 
@@ -335,7 +355,7 @@ class TestMultiDomainQueries:
         for test_case in self.BOUNDARY_MULTI_DOMAIN_QUERIES:
             print(f"\nTesting boundary case: {test_case['description']}")
             
-            async with httpx.AsyncClient(timeout=TEST_TIMEOUT_MEDIUM) as client:
+            async with httpx.AsyncClient(timeout=60.0) as client:
                 response = await client.post(
                     f"{backend_url}/generate_parallel_hybrid",
                     json={
@@ -374,25 +394,34 @@ class TestMultiDomainQueries:
                 f"Boundary case should have good domain coverage ({domain_coverage:.1%}) "
                 f"or acknowledge complexity ({acknowledges_complexity})"
             )
+    # ---------------------------------------------------------------------------------
 
     # Helper methods for validation
     
+    # ---------------------------------------------------------------------------------
     def _extract_cfr_sections(self, text: str) -> Set[str]:
         """Extract CFR section references from response text."""
         import re
-        
-        # Pattern to match CFR references like "30 CFR 75.380" or "30 CFR 56.12016"
-        cfr_pattern = r'30\s+CFR\s+(\d+)\.(\d+)'
-        matches = re.finditer(cfr_pattern, text, re.IGNORECASE)
-        
+
+        # Pattern to match CFR references in multiple formats:
+        # "30 CFR 75.380", "30 CFR 56.12016", "§ 57.5060", "§57.5060"
+        patterns = [
+            r'30\s+CFR\s+(\d+)\.(\d+)',  # Full format: "30 CFR 75.380"
+            r'§\s*(\d+)\.(\d+)',          # Section symbol: "§ 57.5060" or "§57.5060"
+        ]
+
         sections = set()
-        for match in matches:
-            part = match.group(1)
-            section = match.group(2)
-            sections.add(f"30 CFR {part}.{section}")
-        
+        for pattern in patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                part = match.group(1)
+                section = match.group(2)
+                sections.add(f"30 CFR {part}.{section}")
+
         return sections
+    # ---------------------------------------------------------------------------------
     
+    # ---------------------------------------------------------------------------------
     def _check_domain_coverage(self, text: str, expected_domains: List[str]) -> List[str]:
         """Check which expected domains are covered in the response."""
         text_lower = text.lower()
@@ -403,16 +432,23 @@ class TestMultiDomainQueries:
                 domains_found.append(domain)
         
         return domains_found
+    # ---------------------------------------------------------------------------------
     
+    # ---------------------------------------------------------------------------------
     def _calculate_fusion_quality(self, response_data: Dict[str, Any]) -> float:
         """Calculate fusion quality score based on response metadata."""
+        # Extract confidence scores from nested metadata structure
+        metadata = response_data.get("metadata", {})
+        parallel_retrieval = metadata.get("parallel_retrieval", {})
+        context_fusion = metadata.get("context_fusion", {})
+
         # Use final confidence as primary indicator of fusion quality
-        final_confidence = response_data.get("final_confidence", 0.0)
-        
+        final_confidence = context_fusion.get("final_confidence", 0.0)
+
         # If available, also consider vector and graph confidence agreement
-        vector_conf = response_data.get("vector_confidence", 0.0)
-        graph_conf = response_data.get("graph_confidence", 0.0)
-        
+        vector_conf = parallel_retrieval.get("vector_confidence", 0.0)
+        graph_conf = parallel_retrieval.get("graph_confidence", 0.0)
+
         # Quality is higher when both sources contribute well
         if vector_conf > 0.0 and graph_conf > 0.0:
             # Weighted combination: final confidence with bonus for source agreement
@@ -420,6 +456,7 @@ class TestMultiDomainQueries:
             return min(1.0, final_confidence + agreement_bonus)
         else:
             return final_confidence
+    # ---------------------------------------------------------------------------------
 
 
 # =========================================================================
@@ -430,6 +467,7 @@ class TestMultiDomainQueries:
 class TestMultiDomainFailureConditions:
     """Test failure conditions for Test Case 2."""
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_conflicting_domain_requirements(self, backend_url: str):
         """Test handling of potentially conflicting domain requirements."""
@@ -441,7 +479,7 @@ class TestMultiDomainFailureConditions:
         ]
         
         for query in conflicting_queries:
-            async with httpx.AsyncClient(timeout=TEST_TIMEOUT_MEDIUM) as client:
+            async with httpx.AsyncClient(timeout=60.0) as client:
                 response = await client.post(
                     f"{backend_url}/generate_parallel_hybrid",
                     json={
@@ -471,16 +509,19 @@ class TestMultiDomainFailureConditions:
                 for indicator in conflict_awareness_indicators
             )
             
-            low_confidence = response_data["final_confidence"] < 0.7
+            context_fusion = response_data["metadata"]["context_fusion"]
+            low_confidence = context_fusion["final_confidence"] < 0.7
             
             appropriate_handling = acknowledges_domains or low_confidence
             
             assert appropriate_handling, (
                 f"Conflicting domain query should be handled appropriately. "
                 f"Acknowledges domains: {acknowledges_domains}, "
-                f"Low confidence: {low_confidence} ({response_data['final_confidence']:.3f})"
+                f"Low confidence: {low_confidence} ({context_fusion['final_confidence']:.3f})"
             )
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_missing_domain_coverage(self, backend_url: str):
         """Test when system cannot adequately cover all requested domains."""
@@ -488,7 +529,7 @@ class TestMultiDomainFailureConditions:
         # Query with domains that might not be well covered
         challenging_query = "What are the regulations for underwater mining operations with nuclear-powered equipment and space-grade materials?"
         
-        async with httpx.AsyncClient(timeout=TEST_TIMEOUT_MEDIUM) as client:
+        async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.post(
                 f"{backend_url}/generate_parallel_hybrid",
                 json={
@@ -507,7 +548,8 @@ class TestMultiDomainFailureConditions:
         # 3. Appropriate guidance about domain limitations
         
         response_text = response_data["response"].lower()
-        final_confidence = response_data["final_confidence"]
+        context_fusion = response_data["metadata"]["context_fusion"]
+        final_confidence = context_fusion["final_confidence"]
         
         # Should focus on mining aspects and acknowledge limitations
         mining_focus = any(term in response_text for term in ["mining", "msha", "cfr"])
@@ -528,4 +570,9 @@ class TestMultiDomainFailureConditions:
             f"Should handle missing domain coverage appropriately. "
             f"Mining focus: {mining_focus}, Limitation ack: {limitation_acknowledgment}, "
             f"Confidence: {final_confidence:.3f}"
-        ) 
+        )
+    # ---------------------------------------------------------------------------------
+
+# =========================================================================
+# End of File
+# ========================================================================= 

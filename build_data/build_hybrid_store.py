@@ -190,7 +190,7 @@ class HybridStoreBuilder:
             print(f"✅ Neo4j credentials loaded")
 
             # Initialize connections
-            print("🔌 Connecting to Neo4j...")
+            print("Connecting to Neo4j...")
             self.graph = Neo4jGraph(
                 url=self.neo4j_uri,
                 username=self.neo4j_username,

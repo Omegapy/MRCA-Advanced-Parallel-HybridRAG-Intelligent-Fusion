@@ -50,27 +50,34 @@ from tests import (
 # Session-Level Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture(scope="session")
 def event_loop():
     """Create an event loop for async tests."""
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture(scope="session")
 def backend_url():
     """Backend API base URL for testing."""
     return "http://localhost:8000"
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture(scope="session")
 def frontend_url():
     """Frontend UI base URL for testing."""
     return "http://localhost:8501"
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Mock Service Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_neo4j_healthy():
     """Mock healthy Neo4j connection."""
@@ -78,14 +85,18 @@ def mock_neo4j_healthy():
         mock_graph.query.return_value = [{"test": 1}]
         mock_graph.get_schema = Mock(return_value="Mock schema")
         yield mock_graph
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_neo4j_failing():
     """Mock failing Neo4j connection."""
     with patch('backend.graph.graph') as mock_graph:
         mock_graph.query.side_effect = Exception("Connection failed")
         yield mock_graph
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_openai_healthy():
     """Mock healthy OpenAI LLM connection."""
@@ -95,32 +106,40 @@ def mock_openai_healthy():
     with patch('backend.llm.get_llm') as mock_llm:
         mock_llm.return_value.invoke.return_value = mock_response
         yield mock_llm
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_openai_failing():
     """Mock failing OpenAI LLM connection."""
     with patch('backend.llm.get_llm') as mock_llm:
         mock_llm.return_value.invoke.side_effect = Exception("API key invalid")
         yield mock_llm
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_gemini_healthy():
     """Mock healthy Gemini embeddings."""
     with patch('backend.llm.get_embeddings') as mock_embeddings:
         mock_embeddings.return_value.embed_query.return_value = [0.1] * 768
         yield mock_embeddings
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_gemini_failing():
     """Mock failing Gemini embeddings."""
     with patch('backend.llm.get_embeddings') as mock_embeddings:
         mock_embeddings.return_value.embed_query.side_effect = Exception("Embedding failed")
         yield mock_embeddings
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Circuit Breaker Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def reset_circuit_breakers():
     """Reset all circuit breakers before test."""
@@ -135,7 +154,9 @@ def reset_circuit_breakers():
         reset_all_circuit_breakers()
     except ImportError:
         pass
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def mock_circuit_breaker_config():
     """Mock circuit breaker configuration for testing."""
@@ -146,21 +167,27 @@ def mock_circuit_breaker_config():
         "max_timeout_duration": 5.0,
         "backoff_multiplier": 1.5
     }
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Test Data Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def sample_cfr_queries():
     """Sample CFR regulation queries for testing."""
     return SAMPLE_CFR_QUERIES.copy()
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def sample_off_domain_queries():
     """Sample off-domain queries for testing."""
     return SAMPLE_OFF_DOMAIN_QUERIES.copy()
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def sample_regulatory_response():
     """Sample regulatory response for testing."""
@@ -170,7 +197,9 @@ def sample_regulatory_response():
         "sources": ["30 CFR 56.12016"],
         "processing_time": 2.5
     }
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def sample_parallel_hybrid_response():
     """Sample Advanced Parallel Hybrid response."""
@@ -189,50 +218,67 @@ def sample_parallel_hybrid_response():
             "template_time": 1.0
         }
     }
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Performance Testing Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def performance_timer():
     """Timer utility for performance testing."""
     class Timer:
+        # ---------------------------------------------------------------------------------
         def __init__(self):
             self.start_time = None
             self.end_time = None
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         def start(self):
             self.start_time = time.time()
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         def stop(self):
             self.end_time = time.time()
             return self.elapsed
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         @property
         def elapsed(self):
             if self.start_time and self.end_time:
                 return self.end_time - self.start_time
             return None
+        # ---------------------------------------------------------------------------------
     
     return Timer()
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def asr_thresholds():
     """ASR validation thresholds from Module 6 testing plan."""
     return ASR_THRESHOLDS.copy()
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Health Check Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def health_checker():
     """Utility for checking service health."""
     class HealthChecker:
+        # ---------------------------------------------------------------------------------
         def __init__(self):
             self.timeout = TEST_TIMEOUT_SHORT
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         def check_endpoint(self, url: str) -> Dict[str, Any]:
             """Check health of a specific endpoint."""
             try:
@@ -250,26 +296,32 @@ def health_checker():
                     "response_data": None,
                     "error": str(e)
                 }
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         def check_all_services(self) -> Dict[str, Dict[str, Any]]:
             """Check health of all MRCA services."""
             results = {}
             for service_name, url in HEALTH_CHECK_ENDPOINTS.items():
                 results[service_name] = self.check_endpoint(url)
             return results
+        # ---------------------------------------------------------------------------------
     
     return HealthChecker()
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Integration Test Fixtures
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture
 def production_test_caller():
     """Utility to call existing production test functions."""
     class ProductionTestCaller:
         """Calls existing test functions from production modules."""
         
+        # ---------------------------------------------------------------------------------
         def call_vector_test(self):
             """Call the existing vector test function."""
             try:
@@ -278,7 +330,9 @@ def production_test_caller():
                 return True
             except Exception as e:
                 return False, str(e)
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         def call_general_test(self):
             """Call the existing general tool test function."""
             try:
@@ -287,7 +341,9 @@ def production_test_caller():
                 return True
             except Exception as e:
                 return False, str(e)
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         async def call_fusion_test(self):
             """Call the existing context fusion test function."""
             try:
@@ -296,7 +352,9 @@ def production_test_caller():
                 return True
             except Exception as e:
                 return False, str(e)
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         async def call_parallel_test(self):
             """Call the existing parallel retrieval test function."""
             try:
@@ -305,7 +363,9 @@ def production_test_caller():
                 return True
             except Exception as e:
                 return False, str(e)
+        # ---------------------------------------------------------------------------------
         
+        # ---------------------------------------------------------------------------------
         def call_frontend_test(self):
             """Call the existing frontend test function."""
             try:
@@ -317,19 +377,32 @@ def production_test_caller():
                 return main()
             except Exception as e:
                 return False, str(e)
+        # ---------------------------------------------------------------------------------
     
     return ProductionTestCaller()
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # Pytest Hooks and Configuration
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 def pytest_configure(config):
     """Configure pytest settings."""
     # Add custom markers
+    config.addinivalue_line("markers", "unit: mark test as unit test")
     config.addinivalue_line("markers", "integration: mark test as integration test")
+    config.addinivalue_line("markers", "e2e: mark test as end-to-end test")
+    config.addinivalue_line("markers", "reliability: mark test as reliability test")
+    config.addinivalue_line("markers", "architecture: mark test as architecture test")
     config.addinivalue_line("markers", "slow: mark test as slow running")
+    config.addinivalue_line("markers", "requires_neo4j: mark test as requiring Neo4j")
+    config.addinivalue_line("markers", "requires_llm: mark test as requiring LLM API")
+    config.addinivalue_line("markers", "requires_api: mark test as requiring API access")
+    config.addinivalue_line("markers", "smoke: mark test as smoke test")
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 def pytest_collection_modifyitems(config, items):
     """Modify test collection to add markers based on test location."""
     for item in items:
@@ -344,7 +417,9 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(pytest.mark.reliability)
         elif "architecture" in str(item.fspath):
             item.add_marker(pytest.mark.architecture)
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 @pytest.fixture(autouse=True)
 def setup_test_environment():
     """Automatically set up test environment for each test."""

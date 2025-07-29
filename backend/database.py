@@ -349,9 +349,9 @@ class EnhancedNeo4jDatabase:
         Returns:
             Dict[str, Any]: Dictionary containing current database metrics.
         """
-        success_rate = 0
+        success_rate = 0.0
         if self.metrics.total_queries > 0:
-            success_rate = (self.metrics.successful_queries / self.metrics.total_queries) * 100
+            success_rate = self.metrics.successful_queries / self.metrics.total_queries
         
         return {
             "total_queries": self.metrics.total_queries,

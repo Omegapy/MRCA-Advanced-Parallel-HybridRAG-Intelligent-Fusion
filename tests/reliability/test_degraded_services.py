@@ -49,6 +49,7 @@ from tests import ASR_THRESHOLDS, TEST_TIMEOUT_MEDIUM, TEST_TIMEOUT_LONG
 class TestDegradedServices:
     """Test Case 3: Reliability Under Degraded External Services."""
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_neo4j_downtime_circuit_breaker(
         self, 
@@ -115,7 +116,9 @@ class TestDegradedServices:
             assert "unavailable" in response_data.get("error", "").lower(), (
                 "503 response should indicate service unavailability"
             )
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_llm_api_failure_circuit_breaker(
         self, 

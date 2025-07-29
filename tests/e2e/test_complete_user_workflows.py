@@ -107,6 +107,7 @@ class WorkflowResult:
 # Workflow Helper Functions
 # =========================================================================
 
+# ---------------------------------------------------------------------------------
 async def execute_workflow_step(
     client: httpx.AsyncClient,
     step: WorkflowStep,
@@ -132,9 +133,9 @@ async def execute_workflow_step(
             
         # Use appropriate HTTP method
         if step.method.upper() == "GET":
-            response = await client.get(url, timeout=E2E_TEST_TIMEOUT)
+            response = await client.get(url, timeout=30.0)
         elif step.method.upper() == "POST":
-            response = await client.post(url, json=step.payload, timeout=E2E_TEST_TIMEOUT)
+            response = await client.post(url, json=step.payload, timeout=60.0)
         else:
             raise ValueError(f"Unsupported HTTP method: {step.method}")
             
@@ -173,7 +174,9 @@ async def execute_workflow_step(
             "execution_time": time.time() - start_time,
             "validation_results": []
         }
+# ---------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------
 async def execute_complete_workflow(
     workflow_name: str,
     steps: List[WorkflowStep]
@@ -191,7 +194,7 @@ async def execute_complete_workflow(
     step_results = []
     completed_steps = 0
     
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=E2E_TEST_TIMEOUT) as client:
         for i, step in enumerate(steps, 1):
             step_result = await execute_workflow_step(client, step, i)
             step_results.append(step_result)
@@ -213,6 +216,7 @@ async def execute_complete_workflow(
         step_results=step_results,
         success=success
     )
+# ---------------------------------------------------------------------------------
 
 # =========================================================================
 # End-to-End Test Classes
@@ -224,7 +228,9 @@ async def execute_complete_workflow(
 class TestCompleteAPIWorkflows:
     """Test complete API interaction workflows."""
     
-    def test_health_check_workflow(self):
+    # ---------------------------------------------------------------------------------
+    @pytest.mark.asyncio
+    async def test_health_check_workflow(self):
         """Test complete health check workflow across all services."""
         steps = [
             WorkflowStep(
@@ -235,7 +241,7 @@ class TestCompleteAPIWorkflows:
                 validation_checks=["healthy", "api", "parallel_hybrid"]
             ),
             WorkflowStep(
-                step_name="Parallel Hybrid Health Check", 
+                step_name="Parallel Hybrid Health Check",
                 endpoint="/parallel_hybrid/health",
                 payload={},
                 method="GET",
@@ -249,9 +255,9 @@ class TestCompleteAPIWorkflows:
                 validation_checks=["timestamp"]
             )
         ]
-        
+
         # Execute workflow
-        result = asyncio.run(execute_complete_workflow("Health Check Workflow", steps))
+        result = await execute_complete_workflow("Health Check Workflow", steps)
         
         # Assertions
         assert result.success, f"Health workflow failed: {result.step_results}"
@@ -262,8 +268,11 @@ class TestCompleteAPIWorkflows:
         for step_result in result.step_results:
             assert step_result["success"], f"Step {step_result['step_name']} failed"
             assert step_result["execution_time"] < 10.0, "Individual health checks should be fast"
+    # ---------------------------------------------------------------------------------
 
-    def test_advanced_parallel_hybrid_query_workflow(self):
+    # ---------------------------------------------------------------------------------
+    @pytest.mark.asyncio
+    async def test_advanced_parallel_hybrid_query_workflow(self):
         """Test complete Advanced Parallel Hybrid query processing workflow."""
         steps = [
             WorkflowStep(
@@ -299,7 +308,7 @@ class TestCompleteAPIWorkflows:
         ]
         
         # Execute workflow
-        result = asyncio.run(execute_complete_workflow("APH Query Workflow", steps))
+        result = await execute_complete_workflow("APH Query Workflow", steps)
         
         # Assertions
         assert result.success, f"APH query workflow failed: {result.step_results}"
@@ -316,10 +325,15 @@ class TestCompleteAPIWorkflows:
                 assert len(response_data["response"]) > 100, "Response should be substantial"
                 
                 # Check for fusion results
-                if "fusion_ready" in response_data:
-                    assert response_data["fusion_ready"] == True, "Fusion should be ready"
+                metadata = response_data.get("metadata", {})
+                parallel_retrieval = metadata.get("parallel_retrieval", {})
+                if "fusion_ready" in parallel_retrieval:
+                    assert parallel_retrieval["fusion_ready"] == True, "Fusion should be ready"
+    # ---------------------------------------------------------------------------------
 
-    def test_error_handling_workflow(self):
+    # ---------------------------------------------------------------------------------
+    @pytest.mark.asyncio
+    async def test_error_handling_workflow(self):
         """Test API error handling and recovery workflow."""
         steps = [
             WorkflowStep(
@@ -347,8 +361,8 @@ class TestCompleteAPIWorkflows:
             )
         ]
         
-        # Execute workflow  
-        result = asyncio.run(execute_complete_workflow("Error Handling Workflow", steps))
+        # Execute workflow
+        result = await execute_complete_workflow("Error Handling Workflow", steps)
         
         # Assertions - expect first two steps to "fail" (return expected error codes)
         # and third step to succeed
@@ -360,6 +374,7 @@ class TestCompleteAPIWorkflows:
                 assert step_result["success"], f"Error scenario {i+1} should return expected status"
             else:  # Recovery scenario
                 assert step_result["success"], "Recovery request should succeed"
+    # ---------------------------------------------------------------------------------
 
 @pytest.mark.e2e
 @pytest.mark.slow
@@ -367,7 +382,9 @@ class TestCompleteAPIWorkflows:
 class TestAdvancedParallelHybridWorkflows:
     """Test Advanced Parallel Hybrid specific user journeys."""
     
-    def test_fusion_strategy_comparison_workflow(self):
+    # ---------------------------------------------------------------------------------
+    @pytest.mark.asyncio
+    async def test_fusion_strategy_comparison_workflow(self):
         """Test workflow comparing different fusion strategies."""
         base_query = "What are ventilation requirements for mines?"
         
@@ -392,7 +409,7 @@ class TestAdvancedParallelHybridWorkflows:
             ))
         
         # Execute workflow
-        result = asyncio.run(execute_complete_workflow("Fusion Strategy Comparison", steps))
+        result = await execute_complete_workflow("Fusion Strategy Comparison", steps)
         
         # Assertions
         assert result.success, f"Fusion strategy workflow failed: {result.step_results}"
@@ -411,7 +428,8 @@ class TestAdvancedParallelHybridWorkflows:
         assert len(set(response_lengths)) > 1, "Different strategies should produce varied response lengths"
         assert all(score > 0.5 for score in confidence_scores), "All strategies should produce confident responses"
 
-    def test_template_type_workflow(self):
+    @pytest.mark.asyncio
+    async def test_template_type_workflow(self):
         """Test workflow with different template types."""
         base_query = "What are safety equipment requirements?"
         
@@ -437,7 +455,7 @@ class TestAdvancedParallelHybridWorkflows:
             ))
         
         # Execute workflow
-        result = asyncio.run(execute_complete_workflow("Template Type Workflow", steps))
+        result = await execute_complete_workflow("Template Type Workflow", steps)
         
         # Assertions  
         assert result.success, f"Template type workflow failed: {result.step_results}"
@@ -445,6 +463,7 @@ class TestAdvancedParallelHybridWorkflows:
         # Validate all templates work
         for step_result in result.step_results:
             assert step_result["success"], f"Template test {step_result['step_name']} failed"
+    # ---------------------------------------------------------------------------------
 
 @pytest.mark.e2e
 @pytest.mark.slow 
@@ -452,8 +471,11 @@ class TestAdvancedParallelHybridWorkflows:
 class TestSessionManagement:
     """Test session and state management workflows."""
     
-    def test_concurrent_session_workflow(self):
+    # ---------------------------------------------------------------------------------
+    @pytest.mark.asyncio
+    async def test_concurrent_session_workflow(self):
         """Test multiple concurrent user sessions."""
+        # ---------------------------------------------------------------------------------
         async def create_session_workflow(session_id: int):
             """Create a workflow for a specific session."""
             steps = [
@@ -480,8 +502,10 @@ class TestSessionManagement:
             ]
             
             return await execute_complete_workflow(f"Session {session_id} Workflow", steps)
+        # ---------------------------------------------------------------------------------
         
         # Run multiple sessions concurrently
+        # ---------------------------------------------------------------------------------
         async def run_concurrent_sessions():
             session_tasks = []
             for i in range(3):  # 3 concurrent sessions
@@ -489,9 +513,10 @@ class TestSessionManagement:
                 session_tasks.append(task)
             
             return await asyncio.gather(*session_tasks)
+        # ---------------------------------------------------------------------------------
         
         # Execute concurrent sessions
-        session_results = asyncio.run(run_concurrent_sessions())
+        session_results = await run_concurrent_sessions()
         
         # Assertions
         assert len(session_results) == 3, "Should have 3 session results"
@@ -499,6 +524,7 @@ class TestSessionManagement:
         for i, result in enumerate(session_results):
             assert result.success, f"Session {i+1} workflow failed"
             assert result.completed_steps == result.total_steps, f"Session {i+1} incomplete"
+    # ---------------------------------------------------------------------------------
 
 @pytest.mark.e2e
 @pytest.mark.slow
@@ -506,7 +532,9 @@ class TestSessionManagement:
 class TestCrossComponentIntegration:
     """Test integration across multiple system components."""
     
-    def test_full_system_integration_workflow(self):
+    # ---------------------------------------------------------------------------------
+    @pytest.mark.asyncio
+    async def test_full_system_integration_workflow(self):
         """Test complete integration across all system components."""
         steps = [
             # 1. Health checks
@@ -559,7 +587,7 @@ class TestCrossComponentIntegration:
         ]
         
         # Execute full integration workflow
-        result = asyncio.run(execute_complete_workflow("Full System Integration", steps))
+        result = await execute_complete_workflow("Full System Integration", steps)
         
         # Comprehensive assertions
         assert result.success, f"Full integration workflow failed: {result.step_results}"
@@ -588,6 +616,7 @@ class TestCrossComponentIntegration:
         # System should maintain performance
         total_query_time = complex_query_step["execution_time"] + followup_step["execution_time"]
         assert total_query_time < 120.0, "Total query processing should complete in reasonable time"
+    # ---------------------------------------------------------------------------------
 
 # =========================================================================
 # End of File

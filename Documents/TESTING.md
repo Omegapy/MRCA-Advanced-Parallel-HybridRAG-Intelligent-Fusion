@@ -45,9 +45,18 @@ tests/
 ├── __init__.py              # Test package configuration
 ├── conftest.py              # Shared fixtures and utilities
 ├── pytest.ini              # Pytest configuration
-├── unit/                    # Unit tests
+├── unit/                    # Comprehensive unit tests
 │   ├── __init__.py
-│   └── test_circuit_breaker.py
+│   ├── test_config.py              # Configuration management and validation
+│   ├── test_llm.py                 # LLM factory functions and lazy loading
+│   ├── test_database.py            # Enhanced Neo4j database operations
+│   ├── test_parallel_hybrid.py     # Parallel retrieval engine and async execution
+│   ├── test_context_fusion.py      # Fusion strategies and confidence scoring
+│   ├── test_hybrid_templates.py    # Template generation and response formatting
+│   ├── test_utils.py               # Session management and utility functions
+│   ├── test_tools.py               # Vector, Cypher, and General tool components
+│   ├── test_graph.py               # Graph operations and lazy loading patterns
+│   └── test_circuit_breaker.py     # Circuit breaker pattern implementation
 ├── integration/             # Integration tests  
 │   ├── __init__.py
 │   ├── test_regulatory_citation_retrieval.py (Test Case 1)
@@ -202,20 +211,81 @@ pytest tests/unit/ --cov=backend --cov-report=xml
 
 ### Unit Tests (`tests/unit/`)
 
-**Purpose**: Test individual components in isolation
+**Purpose**: Test individual backend components in isolation with comprehensive coverage
 
-**Key Tests**:
-- `test_circuit_breaker.py`: Comprehensive circuit breaker testing (38 tests)
+**Test Suite Overview**: 9 major backend components with ~2,000+ individual test cases
+
+**Core Component Tests**:
+- `test_config.py`: Configuration management and validation (50+ tests)
+  - BackendConfig class functionality
+  - Environment variable loading
+  - Configuration validation and defaults
+  - Helper methods and error handling
+
+- `test_llm.py`: LLM factory functions and lazy loading (40+ tests)
+  - LLM instance creation and caching
+  - Provider validation and fallback
+  - Error handling and resilience
+  - Factory pattern implementation
+
+- `test_database.py`: Enhanced Neo4j database operations (80+ tests)
+  - Database connection management
+  - Query execution and retry logic
+  - Health checks and metrics
   - Configuration validation
-  - State transitions  
-  - Exponential backoff
-  - Metrics tracking
-  - Async support
-  - Registry management
 
-**Markers**: `@pytest.mark.unit`
+- `test_parallel_hybrid.py`: Parallel retrieval engine (100+ tests)
+  - Async parallel execution
+  - VectorRAG and GraphRAG coordination
+  - Performance monitoring and metrics
+  - Error handling and timeout management
 
-**Speed**: Fast (~30 seconds)
+- `test_context_fusion.py`: Fusion strategies and confidence scoring (90+ tests)
+  - 4 fusion strategies (Weighted Linear, Max Confidence, Advanced Hybrid, Adaptive)
+  - Quality analysis and confidence calculation
+  - Regulatory content evaluation
+  - Template integration
+
+- `test_hybrid_templates.py`: Template generation and formatting (70+ tests)
+  - 5 template types for different use cases
+  - Response formatting and cleanup
+  - Confidence information display
+  - Content truncation and optimization
+
+- `test_utils.py`: Session management and utilities (60+ tests)
+  - Session ID generation and management
+  - Message storage and conversation tracking
+  - Regulatory response formatting
+  - In-memory session operations
+
+- `test_tools.py`: Vector, Cypher, and General tools (120+ tests)
+  - VectorRAG semantic search functionality
+  - GraphRAG Cypher query generation
+  - General MSHA guidance provision
+  - Tool health checks and fallback mechanisms
+
+- `test_graph.py`: Graph operations and lazy loading (50+ tests)
+  - Neo4j configuration validation
+  - Lazy loading pattern implementation
+  - Connection testing and error handling
+  - Legacy compatibility support
+
+- `test_circuit_breaker.py`: Circuit breaker pattern (38 tests)
+  - Configuration validation and state transitions
+  - Exponential backoff and metrics tracking
+  - Async support and registry management
+
+**Advanced Testing Features**:
+- **Mock Integration**: Comprehensive mocking of external dependencies
+- **Async Testing**: Full pytest-asyncio support for concurrent operations
+- **Error Scenarios**: Extensive error handling and edge case testing
+- **Performance Testing**: Large dataset and memory efficiency validation
+- **Thread Safety**: Concurrent operation and singleton pattern testing
+- **Factory Patterns**: Lazy loading and singleton implementation testing
+
+**Markers**: `@pytest.mark.unit`, `@pytest.mark.asyncio`
+
+**Speed**: Fast (~2-3 minutes for full suite)
 
 ### Integration Tests (`tests/integration/`)
 

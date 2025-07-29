@@ -749,15 +749,15 @@ def get_parallel_engine() -> ParallelRetrievalEngine:
 # ------------------------
 
 # ---------------------------------------------------------------------------------
-async def test_parallel_retrieval() -> None:
-    """Test the parallel retrieval engine functionality.
+async def validate_parallel_retrieval() -> None:
+    """Validate the parallel retrieval engine functionality.
 
-    This development and testing function validates the parallel retrieval engine
+    This development and validation function validates the parallel retrieval engine
     by executing test queries and reporting performance metrics, confidence scores,
     and error handling capabilities.
 
     Examples:
-        >>> await test_parallel_retrieval()
+        >>> await validate_parallel_retrieval()
         Testing Parallel Retrieval Engine...
         All tests completed successfully
     """

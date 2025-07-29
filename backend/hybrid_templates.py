@@ -353,23 +353,41 @@ EXPERT RESPONSE:"""
         """Enhanced specialized template for regulatory compliance queries with mine-type awareness"""
         
         # CHECK FOR OUT-OF-SCOPE QUERIES FIRST
+        query_lower = user_query.lower()
         content_lower = fusion_result.fused_content.lower()
-        out_of_scope_indicators = [
+
+        # Check if the user query itself is off-domain
+        off_domain_query_indicators = [
+            "dog", "cat", "animal", "pet", "sound", "noise", "bark", "meow",
+            "weather", "cooking", "recipe", "sports", "music", "movie", "book",
+            "car", "travel", "vacation", "restaurant", "food", "clothing",
+            "computer", "software", "programming", "internet", "social media",
+            "politics", "election", "government", "tax", "finance", "stock",
+            "health", "medicine", "doctor", "hospital", "disease", "symptom"
+        ]
+
+        # Check if query contains obvious off-domain terms
+        query_is_off_domain = any(term in query_lower for term in off_domain_query_indicators)
+
+        # Also check if the retrieved content indicates off-scope
+        content_out_of_scope_indicators = [
             "does not directly relate", "does not pertain to", "i don't know",
-            "does not include information about", "outside the mining", 
+            "does not include information about", "outside the mining",
             "not related to mining", "about dogs", "about cats", "about animals"
         ]
-        
-        # If query is clearly out of scope, return simple response
-        if any(indicator in content_lower for indicator in out_of_scope_indicators):
+
+        content_indicates_off_scope = any(indicator in content_lower for indicator in content_out_of_scope_indicators)
+
+        # If query is clearly out of scope, return appropriate redirection
+        if query_is_off_domain or content_indicates_off_scope:
+            from backend.tools.general import handle_out_of_scope_questions
             return f"""You are an MSHA regulatory compliance assistant.
 
 USER QUERY: {user_query}
 
-CONTEXT: {fusion_result.fused_content}
+RESPONSE: {handle_out_of_scope_questions(user_query)}
 
-
-SIMPLE RESPONSE:"""
+Please ask me about mining safety, MSHA regulations, or related topics instead."""
         
         # ENHANCEMENT: Analyze query for mine type and compliance focus
         query_lower = user_query.lower()

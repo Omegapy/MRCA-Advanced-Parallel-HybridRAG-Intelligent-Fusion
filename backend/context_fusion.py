@@ -280,13 +280,21 @@ class HybridContextFusion:
         logger.info(f"Starting context fusion using {strategy.value} strategy")
         
         if strategy == FusionStrategy.WEIGHTED_LINEAR:
-            return await self._weighted_linear_fusion(parallel_response, weights)
+            result = await self._weighted_linear_fusion(parallel_response, weights)
+            result.fusion_strategy = strategy.value
+            return result
         elif strategy == FusionStrategy.MAX_CONFIDENCE:
-            return await self._max_confidence_fusion(parallel_response)
+            result = await self._max_confidence_fusion(parallel_response)
+            result.fusion_strategy = strategy.value
+            return result
         elif strategy == FusionStrategy.ADVANCED_HYBRID:
-            return await self._advanced_hybrid_fusion(parallel_response, weights)
+            result = await self._advanced_hybrid_fusion(parallel_response, weights)
+            result.fusion_strategy = strategy.value
+            return result
         elif strategy == FusionStrategy.ADAPTIVE_FUSION:
-            return await self._adaptive_fusion(parallel_response, weights)
+            result = await self._adaptive_fusion(parallel_response, weights)
+            result.fusion_strategy = strategy.value
+            return result
         else:
             logger.error(f"❌ Unknown fusion strategy: {strategy}")
             return self._create_fallback_fusion(parallel_response)
@@ -648,8 +656,8 @@ Combined Response:"""
         quality_score = 0.0
         
         # Enhanced CFR citations with hierarchical awareness
-        # Basic CFR citations (existing)
-        cfr_matches = len(re.findall(r'\b\d+\s+CFR\s+§\s*\d+', content))
+        # Basic CFR citations (existing) - fixed to handle decimal sections
+        cfr_matches = len(re.findall(r'\b\d+\s+CFR\s+§\s*\d+(?:\.\d+)*', content))
         quality_score += min(0.3, cfr_matches * 0.1)
         
         # ENHANCEMENT: Advanced CFR citation patterns

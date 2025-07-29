@@ -97,6 +97,7 @@ class TestConfidenceAndHallucinationPrevention:
         }
     ]
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_primary_off_domain_detection(
         self, 
@@ -127,10 +128,13 @@ class TestConfidenceAndHallucinationPrevention:
         
         # Validate response structure
         assert "response" in response_data, "Response missing 'response' field"
-        assert "final_confidence" in response_data, "Response missing final confidence"
-        
+        assert "metadata" in response_data, "Response missing metadata"
+
+        # Extract confidence scores from nested metadata structure
+        context_fusion = response_data["metadata"].get("context_fusion", {})
+        final_confidence = context_fusion.get("final_confidence", 0.0)
+
         response_text = response_data["response"]
-        final_confidence = response_data["final_confidence"]
         
         # Test Case 5 specific validations
         
@@ -176,7 +180,9 @@ class TestConfidenceAndHallucinationPrevention:
         print(f"   Domain guidance provided: {contains_domain_guidance}")
         print(f"   Final confidence: {final_confidence:.3f}")
         print(f"   Response preview: {response_text[:150]}...")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_multiple_off_domain_queries(
         self, 
@@ -204,7 +210,8 @@ class TestConfidenceAndHallucinationPrevention:
             response_data = response.json()
             
             response_text = response_data["response"]
-            final_confidence = response_data["final_confidence"]
+            context_fusion = response_data["metadata"].get("context_fusion", {})
+            final_confidence = context_fusion.get("final_confidence", 0.0)
             
             # Check for appropriate domain handling
             mining_indicators = ["mining", "msha", "cfr", "regulatory", "safety"]
@@ -238,7 +245,9 @@ class TestConfidenceAndHallucinationPrevention:
         print(f"   Low confidence rate: {low_confidence_rate:.1%}")
         print(f"   Domain redirect rate: {domain_redirect_rate:.1%}")
         print(f"   Average confidence: {sum(r['confidence'] for r in results) / len(results):.3f}")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_domain_boundary_queries(
         self, 
@@ -263,7 +272,8 @@ class TestConfidenceAndHallucinationPrevention:
             response_data = response.json()
             
             response_text = response_data["response"]
-            final_confidence = response_data["final_confidence"]
+            context_fusion = response_data["metadata"].get("context_fusion", {})
+            final_confidence = context_fusion.get("final_confidence", 0.0)
             
             # These should redirect to mining/MSHA domain appropriately
             mining_redirect_indicators = [
@@ -282,7 +292,9 @@ class TestConfidenceAndHallucinationPrevention:
                     f"Query: {test_case['query']}, Confidence: {final_confidence}, "
                     f"Has mining redirect: {has_mining_redirect}"
                 )
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_in_domain_high_confidence(
         self, 
@@ -308,7 +320,8 @@ class TestConfidenceAndHallucinationPrevention:
             assert response.status_code == 200
             response_data = response.json()
             
-            final_confidence = response_data["final_confidence"]
+            context_fusion = response_data["metadata"].get("context_fusion", {})
+            final_confidence = context_fusion.get("final_confidence", 0.0)
             high_confidence_results.append(final_confidence)
         
         # In-domain queries should generally have high confidence
@@ -326,7 +339,9 @@ class TestConfidenceAndHallucinationPrevention:
         print(f"✅ In-domain confidence test PASSED:")
         print(f"   Average confidence: {avg_confidence:.3f}")
         print(f"   High confidence rate: {high_confidence_rate:.1%}")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_hallucination_prevention_specific_domains(
         self, 
@@ -385,6 +400,7 @@ class TestConfidenceAndHallucinationPrevention:
                 f"System may have hallucinated about {test['description']}. "
                 f"Response: {response_data['response'][:200]}..."
             )
+    # ---------------------------------------------------------------------------------
 
 
 # =========================================================================
@@ -395,6 +411,7 @@ class TestConfidenceAndHallucinationPrevention:
 class TestASRConfidenceValidation:
     """Architecture evaluation tests for ASR validation."""
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_confidence_score_distribution(
         self, 
@@ -439,7 +456,8 @@ class TestASRConfidenceValidation:
                 
                 assert response.status_code == 200
                 response_data = response.json()
-                confidences.append(response_data["final_confidence"])
+                context_fusion = response_data["metadata"].get("context_fusion", {})
+                confidences.append(context_fusion.get("final_confidence", 0.0))
             
             confidence_distributions[category] = {
                 "avg": sum(confidences) / len(confidences),
@@ -462,7 +480,9 @@ class TestASRConfidenceValidation:
         print(f"✅ Confidence distribution test PASSED:")
         for category, stats in confidence_distributions.items():
             print(f"   {category}: avg={stats['avg']:.3f}, min={stats['min']:.3f}, max={stats['max']:.3f}")
+    # ---------------------------------------------------------------------------------
 
+    # ---------------------------------------------------------------------------------
     @pytest.mark.asyncio
     async def test_fusion_quality_correlation(
         self, 
@@ -493,12 +513,16 @@ class TestASRConfidenceValidation:
             assert response.status_code == 200
             response_data = response.json()
             
+            # Extract confidence scores from nested metadata structure
+            parallel_retrieval = response_data["metadata"].get("parallel_retrieval", {})
+            context_fusion = response_data["metadata"].get("context_fusion", {})
+
             fusion_results.append({
                 "query": query,
-                "vector_confidence": response_data.get("vector_confidence", 0),
-                "graph_confidence": response_data.get("graph_confidence", 0),
-                "final_confidence": response_data["final_confidence"],
-                "fusion_ready": response_data.get("fusion_ready", False)
+                "vector_confidence": parallel_retrieval.get("vector_confidence", 0),
+                "graph_confidence": parallel_retrieval.get("graph_confidence", 0),
+                "final_confidence": context_fusion.get("final_confidence", 0.0),
+                "fusion_ready": parallel_retrieval.get("fusion_ready", False)
             })
         
         # Validate fusion quality patterns
@@ -516,4 +540,9 @@ class TestASRConfidenceValidation:
         print(f"✅ Fusion quality correlation test PASSED:")
         for result in fusion_results:
             print(f"   {result['query'][:40]}...: final={result['final_confidence']:.3f}, "
-                  f"vector={result['vector_confidence']:.3f}, graph={result['graph_confidence']:.3f}") 
+                  f"vector={result['vector_confidence']:.3f}, graph={result['graph_confidence']:.3f}")
+    # ---------------------------------------------------------------------------------
+
+# =========================================================================
+# End of File
+# ========================================================================= 

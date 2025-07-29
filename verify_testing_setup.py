@@ -2,6 +2,7 @@
 # -------------------------------------------------------------------------
 # File: verify_testing_setup.py
 # Project: MRCA - Mining Regulatory Compliance Assistant
+#          Advanced Parallel HybridRAG - Intelligent Fusion System
 # Author: Alexander Ricciardi
 # Date: 2025-01-17 (Creation Date)
 # Last Modified: 2025-01-17 
@@ -12,6 +13,39 @@
 # Verification script for Week 1 testing infrastructure setup.
 # Tests that pytest configuration, fixtures, and test discovery work correctly
 # before running the full test suite. Validates Module 6 test case implementations.
+# -------------------------------------------------------------------------
+
+# --- Module Contents Overview ---
+# - Function: print_section - Print formatted section header
+# - Function: print_result - Print test result with formatting
+# - Function: check_file_exists - Check if file exists and print result
+# - Function: check_pytest_config - Verify pytest configuration
+# - Function: check_test_discovery - Test pytest test discovery
+# - Function: check_module_6_tests - Verify Module 6 test case implementations
+# - Function: check_unit_tests - Verify unit test infrastructure
+# - Function: check_production_test_integration - Verify production test integration
+# - Function: check_test_categories - Verify test category markers are working
+# - Function: check_dependencies - Check that testing dependencies are available
+# - Function: run_sample_test - Run a sample test to verify everything works
+# - Function: main - Main verification function
+# -------------------------------------------------------------------------
+
+# --- Dependencies / Imports ---
+# - Standard Library: sys, os (for system operations and path management)
+# - Standard Library: subprocess (for running pytest commands)
+# - Standard Library: importlib.util (for module import verification)
+# - Standard Library: pathlib.Path (for file system operations)
+# -------------------------------------------------------------------------
+
+# --- Usage / Integration ---
+# This verification script should be run after setting up the testing infrastructure
+# to ensure all components are properly configured. Run with: python3 verify_testing_setup.py
+# It validates pytest setup, test discovery, Module 6 implementations, and dependencies.
+# -------------------------------------------------------------------------
+
+# --- Apache-2.0 ---
+# © 2025 Alexander Samuel Ricciardi - Mining Regulatory Compliance Assistant  
+# License: Apache-2.0 | Technology: Advanced Parallel HybridRAG - Intelligent Fusion (APH-IF) System
 # -------------------------------------------------------------------------
 
 """
@@ -25,38 +59,85 @@ This script verifies that the Week 1 testing infrastructure is properly set up:
 5. Production test integration
 """
 
+# =========================================================================
+# Imports
+# =========================================================================
+# Standard library imports
 import sys
 import os
 import subprocess
 import importlib.util
 from pathlib import Path
 
+# =========================================================================
+# Utility Functions
+# =========================================================================
 
+# ---------------------------------------------------------------------------------
 def print_section(title):
-    """Print formatted section header."""
+    """Print formatted section header.
+    
+    Creates a visually distinct section separator for test output organization.
+    
+    Args:
+        title (str): The section title to display
+    """
     print(f"\n{'='*60}")
     print(f"🔍 {title}")
     print('='*60)
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def print_result(test_name, passed, details=""):
-    """Print test result with formatting."""
+    """Print test result with formatting.
+    
+    Displays test results in a consistent format with pass/fail indicators
+    and optional detailed information.
+    
+    Args:
+        test_name (str): Name of the test being reported
+        passed (bool): Whether the test passed
+        details (str, optional): Additional details about the test result
+    """
     status = "✅ PASSED" if passed else "❌ FAILED"
     print(f"{status} - {test_name}")
     if details:
         print(f"   {details}")
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def check_file_exists(filepath, description=""):
-    """Check if file exists and print result."""
+    """Check if file exists and print result.
+    
+    Verifies file existence and reports the result in standard format.
+    
+    Args:
+        filepath (str): Path to the file to check
+        description (str, optional): Human-readable description of the file
+        
+    Returns:
+        bool: True if file exists, False otherwise
+    """
     exists = Path(filepath).exists()
     desc = description or f"File: {filepath}"
     print_result(desc, exists)
     return exists
+# ---------------------------------------------------------------------------------
 
+# =========================================================================
+# Configuration Verification Functions
+# =========================================================================
 
+# ---------------------------------------------------------------------------------
 def check_pytest_config():
-    """Verify pytest configuration."""
+    """Verify pytest configuration.
+    
+    Checks that all essential pytest configuration files exist including
+    pytest.ini, test package initialization, shared fixtures, and dependencies.
+    
+    Returns:
+        bool: True if all configuration files exist, False otherwise
+    """
     print_section("Pytest Configuration")
     
     config_files = [
@@ -72,10 +153,18 @@ def check_pytest_config():
         all_good = all_good and exists
     
     return all_good
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def check_test_discovery():
-    """Test pytest test discovery."""
+    """Test pytest test discovery.
+    
+    Runs pytest in collection mode to verify that test discovery is working
+    correctly and reports the number of tests found.
+    
+    Returns:
+        bool: True if test discovery successful, False otherwise
+    """
     print_section("Test Discovery")
     
     try:
@@ -112,10 +201,22 @@ def check_test_discovery():
     except Exception as e:
         print_result("Pytest test discovery", False, f"Exception: {e}")
         return False
+# ---------------------------------------------------------------------------------
 
+# =========================================================================
+# Test Implementation Verification Functions
+# =========================================================================
 
+# ---------------------------------------------------------------------------------
 def check_module_6_tests():
-    """Verify Module 6 test case implementations."""
+    """Verify Module 6 test case implementations.
+    
+    Validates that all required Module 6 test case files exist and contain
+    proper test class structures with pytest markers.
+    
+    Returns:
+        bool: True if all Module 6 test cases are implemented, False otherwise
+    """
     print_section("Module 6 Test Cases")
     
     test_cases = [
@@ -142,10 +243,18 @@ def check_module_6_tests():
                 print_result(f"  Content validation", False, f"Error reading file: {e}")
     
     return all_good
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def check_unit_tests():
-    """Verify unit test infrastructure."""
+    """Verify unit test infrastructure.
+    
+    Checks that unit test package and core unit test files exist including
+    circuit breaker tests which are essential for system reliability.
+    
+    Returns:
+        bool: True if unit test infrastructure is in place, False otherwise
+    """
     print_section("Unit Tests")
     
     unit_tests = [
@@ -159,10 +268,18 @@ def check_unit_tests():
         all_good = all_good and exists
     
     return all_good
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def check_production_test_integration():
-    """Verify production test integration."""
+    """Verify production test integration.
+    
+    Validates that the formal testing framework properly integrates with
+    existing production test functions through the production_test_caller fixture.
+    
+    Returns:
+        bool: True if production test integration is working, False otherwise
+    """
     print_section("Production Test Integration")
     
     try:
@@ -190,10 +307,22 @@ def check_production_test_integration():
     except Exception as e:
         print_result("Production test integration", False, f"Error: {e}")
         return False
+# ---------------------------------------------------------------------------------
 
+# =========================================================================
+# Advanced Verification Functions
+# =========================================================================
 
+# ---------------------------------------------------------------------------------
 def check_test_categories():
-    """Verify test category markers are working."""
+    """Verify test category markers are working.
+    
+    Tests that pytest marker filtering works correctly for different test
+    categories (unit, integration, etc.) to ensure proper test organization.
+    
+    Returns:
+        bool: True if test category markers work, False otherwise
+    """
     print_section("Test Category Markers")
     
     try:
@@ -223,10 +352,18 @@ def check_test_categories():
     except Exception as e:
         print_result("Test category markers", False, f"Error: {e}")
         return False
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def check_dependencies():
-    """Check that testing dependencies are available."""
+    """Check that testing dependencies are available.
+    
+    Verifies that all essential Python packages required for testing are
+    installed and can be imported successfully.
+    
+    Returns:
+        bool: True if all dependencies are available, False otherwise
+    """
     print_section("Testing Dependencies")
     
     key_dependencies = [
@@ -249,17 +386,25 @@ def check_dependencies():
             all_good = False
     
     return all_good
+# ---------------------------------------------------------------------------------
 
-
+# ---------------------------------------------------------------------------------
 def run_sample_test():
-    """Run a sample test to verify everything works."""
+    """Run a sample test to verify everything works.
+    
+    Executes a representative test from the test suite to validate that
+    the complete testing infrastructure is functional end-to-end.
+    
+    Returns:
+        bool: True if sample test runs successfully, False otherwise
+    """
     print_section("Sample Test Execution")
     
     try:
         # Try to run the Test Case 1 primary test
         result = subprocess.run(
             ["python", "-m", "pytest", 
-             "tests/integration/test_regulatory_citation_retrieval.py::TestRegulatoryCitationRetrieval::test_primary_cfr_citation_parallel_hybrid", 
+             "tests/integration/test_regulatory_citation_retrieval.py::TestRegulatoryCitationRetrieval::test_direct_cfr_citation_parallel_hybrid", 
              "-v", "--tb=short"],
             capture_output=True,
             text=True,
@@ -284,10 +429,23 @@ def run_sample_test():
     except Exception as e:
         print_result("Sample test execution", False, f"Exception: {e}")
         return False
+# ---------------------------------------------------------------------------------
 
+# =========================================================================
+# Main Verification Function
+# =========================================================================
 
+# ---------------------------------------------------------------------------------
 def main():
-    """Main verification function."""
+    """Main verification function.
+    
+    Orchestrates the complete testing infrastructure verification process.
+    Runs all checks in sequence and provides a comprehensive summary of
+    the testing setup status with actionable next steps.
+    
+    Returns:
+        bool: True if all verifications pass, False if any issues found
+    """
     print("MRCA Testing Infrastructure Verification")
     print("Verifying Week 1 testing setup completion...\n")
     
@@ -345,8 +503,24 @@ def main():
         print("   • Check file paths and directory structure")
     
     return passed_checks == total_checks
+# ---------------------------------------------------------------------------------
 
+# =========================================================================
+# Module Initialization / Main Execution Guard
+# =========================================================================
 
+# ---------------------------------------------------------------------------------
 if __name__ == "__main__":
+    """
+    Execute the testing infrastructure verification when script is run directly.
+    
+    This block runs only when the file is executed directly, not when imported.
+    Executes the main verification function and exits with appropriate status code.
+    """
     success = main()
-    sys.exit(0 if success else 1) 
+    sys.exit(0 if success else 1)
+# ---------------------------------------------------------------------------------
+
+# =========================================================================
+# End of File
+# ========================================================================= 

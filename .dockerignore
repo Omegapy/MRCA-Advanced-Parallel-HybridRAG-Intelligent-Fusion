@@ -79,6 +79,7 @@ launch_docker.sh
 docker-compose.yml
 docker-compose.*.yml
 Dockerfile.dev
+DOCKER_SETUP_COMPLETE.md
 
 # =========================================================================
 # Python Development Files

@@ -173,7 +173,7 @@ class GraphBuilder:
             ValueError: If required API keys or database credentials are missing
             Exception: If connection to Neo4j or Gemini services fails
         """
-        print("🔧 Initializing GraphBuilder...")
+        print("Initializing GraphBuilder...")
         try:
             # Gemini API Key from secrets
             self.gemini_api_key = secrets.get("GEMINI_API_KEY")
@@ -220,7 +220,7 @@ class GraphBuilder:
             print("✅ Gemini embeddings initialized")
 
             # Initialize the Graph Transformer with explicit node and relationship types
-            print("🔄 Initializing LLM Graph Transformer...")
+            print("Initializing LLM Graph Transformer...")
             allowed_nodes = ["Person", "Organization", "Location", "Equipment", "Regulation", "Safety", "Procedure", "Chemical", "Mining", "Concept", "Component"]
             allowed_relationships = ["REQUIRES", "RELATES_TO", "PART_OF", "MANAGES", "USES", "LOCATED_IN", "GOVERNS", "APPLIES_TO", "CONTAINS", "SPECIFIES"]
             
@@ -548,7 +548,7 @@ def main():
         >>> if __name__ == "__main__":
         ...     main()
     """
-    print("🚀 Starting MRCA Knowledge Graph Builder")
+    print("Starting MRCA Knowledge Graph Builder")
     print("=" * 50)
     
     try:
