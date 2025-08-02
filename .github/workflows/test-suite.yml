@@ -20,16 +20,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # -------------------------------------------------------------------------
 
-name: MRCA Comprehensive Test Suite
+
+#--- Paused Automatic Test Suite as it costs me money due to LLM calls ----
+
+
+name: MRCA Test Suite
 
 on:
-  # Run on all pushes to main branch
-  push:
-    branches: [ main, develop, dev ]
+ # Run on all pushes to main branch
+  # push:
+  #   branches: [ main, develop, dev ]
 
-  # Run on all pull requests
-  pull_request:
-    branches: [ main, develop, dev ]
+  # Run on all pull requests
+  # pull_request:
+  #   branches: [ main, develop, dev ]
   
   # Allow manual workflow dispatch
   workflow_dispatch:
@@ -45,8 +49,8 @@ on:
         - full
       
   # Scheduled runs (daily at 2 AM UTC)
-  schedule:
-    - cron: '0 2 * * *'
+  # schedule:
+  #  - cron: '0 2 * * *'
 
 env:
   PYTHON_VERSION: '3.12'
