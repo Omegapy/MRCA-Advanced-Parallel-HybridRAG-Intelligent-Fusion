@@ -68,6 +68,7 @@ across the Mining Regulatory Compliance Assistant backend system.
 # =========================================================================
 # Standard library imports
 import logging
+import os
 
 # Third-party library imports
 from langchain_openai import ChatOpenAI
@@ -184,7 +185,6 @@ def get_llm():
     try:
         api_key, model = validate_openai_config()
         # Set environment variable for OpenAI
-        import os
         os.environ["OPENAI_API_KEY"] = api_key
         
         return ChatOpenAI(
@@ -221,9 +221,8 @@ def get_embeddings():
     """
     try:
         api_key = validate_gemini_config()
-        
+
         # Set environment variable for Google AI models
-        import os
         os.environ["GOOGLE_API_KEY"] = api_key
         
         return GoogleGenerativeAIEmbeddings(

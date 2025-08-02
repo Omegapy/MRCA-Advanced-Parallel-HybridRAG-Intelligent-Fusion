@@ -120,7 +120,6 @@ def test_frontend_functions():
             get_session_id,
             display_parallel_hybrid_metrics,
             get_welcome_message,
-            call_traditional_api,
             call_parallel_hybrid_api
         )
         print("✅ Core functions imported successfully")
@@ -131,7 +130,7 @@ def test_frontend_functions():
     # Test welcome message generation
     try:
         welcome = get_welcome_message()
-        if "MRCA v2.0" in welcome and "Advanced Parallel Hybrid" in welcome:
+        if "MRCA - APH-IF Beta v2.0" in welcome and "Advanced Parallel Hybrid" in welcome:
             print("✅ Welcome message contains parallel hybrid content")
         else:
             print("❌ Welcome message missing parallel hybrid content")

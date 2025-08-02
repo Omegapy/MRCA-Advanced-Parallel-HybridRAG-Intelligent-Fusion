@@ -449,7 +449,7 @@ def get_welcome_message() -> str:
     Returns:
         str: A formatted string containing the welcome message.
     """
-    return """**Welcome to MRCA - Advanced Parallel Hybrid!**
+    return """**MRCA - APH-IF Beta v2.0**
 
 I'm your research-grade AI assistant for navigating **Title 30 CFR mining safety regulations**. This system uses advanced Advanced Parallel Hybrid technology for superior performance:
 
@@ -1079,11 +1079,11 @@ def main() -> None:
         metadata = message.get("metadata")
         
         # Special handling for welcome message - display in expandable container
-        if (message['role'] == 'assistant' and 
-            message['content'].startswith("**Welcome to MRCA - Advanced Parallel Hybrid!**")):
-            
+        if (message['role'] == 'assistant' and
+            message['content'].startswith("**MRCA - APH-IF Beta v2.0**")):
+
             with st.chat_message("assistant"):
-                with st.expander("Welcome to MRCA - Advanced Parallel Hybrid - Intelligent Fusion!", expanded=False):
+                with st.expander("Welcome to MRCA Beta v2.0 - Advanced Parallel Hybrid - Intelligent Fusion!", expanded=False):
                     st.markdown(message['content'])
         else:
             write_message(message['role'], message['content'], save=False, metadata=metadata)

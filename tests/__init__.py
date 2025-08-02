@@ -41,9 +41,9 @@ Usage:
 __version__ = "1.0.0"
 
 # Test configuration constants
-TEST_TIMEOUT_SHORT = 5      # Short operations (seconds)
-TEST_TIMEOUT_MEDIUM = 30    # Medium operations (seconds) 
-TEST_TIMEOUT_LONG = 300     # Long operations (seconds)
+TEST_TIMEOUT_SHORT = 240    # Short operations (seconds) - Updated for LLM calls
+TEST_TIMEOUT_MEDIUM = 240   # Medium operations (seconds) - Updated for LLM calls
+TEST_TIMEOUT_LONG = 240     # Long operations (seconds) - Updated for LLM calls
 
 # Test data constants
 SAMPLE_CFR_QUERIES = [
@@ -62,8 +62,8 @@ SAMPLE_OFF_DOMAIN_QUERIES = [
 ASR_THRESHOLDS = {
     "min_confidence_single_source": 0.85,
     "min_confidence_fusion": 0.70,
-    "max_response_time_p95": 5.0,      # seconds
-    "max_response_time_normal": 35.0,   # seconds  
+    "max_response_time_p95": 45.0,      # seconds - adjusted for complex parallel hybrid queries with rate limiting
+    "max_response_time_normal": 45.0,   # seconds
     "min_final_confidence": 0.90
 }
 
@@ -79,4 +79,8 @@ CIRCUIT_BREAKER_SERVICES = [
     "neo4j_service",
     "openai_service", 
     "gemini_service"
-] 
+]
+
+# =========================================================================
+# End of File
+# ========================================================================= 

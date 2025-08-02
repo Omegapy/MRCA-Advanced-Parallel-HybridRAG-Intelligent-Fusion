@@ -53,8 +53,8 @@ component interactions, multi-domain queries, and regulatory citation retrieval.
 # =========================================================================
 
 # Integration test configuration
-INTEGRATION_TEST_TIMEOUT = 90  # seconds for integration tests
-COMPONENT_HEALTH_CHECK_TIMEOUT = 30  # seconds for component health validation
+INTEGRATION_TEST_TIMEOUT = 240  # seconds for integration tests (updated for LLM calls)
+COMPONENT_HEALTH_CHECK_TIMEOUT = 240  # seconds for component health validation (updated for LLM calls)
 MULTI_DOMAIN_FUSION_THRESHOLD = 0.70  # minimum fusion quality for multi-domain tests
 
 # Component integration test endpoints

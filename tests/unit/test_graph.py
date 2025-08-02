@@ -318,6 +318,9 @@ class TestGlobalGraphInstance:
         """Test that global graph delegates queries correctly."""
         mock_neo4j_graph.query.return_value = sample_query_result
 
+        # Reset the cached graph instance to ensure fresh mocking
+        graph._graph = None
+
         with patch('backend.graph.get_graph', return_value=mock_neo4j_graph):
             result = graph.query("MATCH (n) RETURN count(n)")
 
@@ -326,6 +329,9 @@ class TestGlobalGraphInstance:
 
     def test_global_graph_attribute_access(self, mock_config, mock_neo4j_graph):
         """Test global graph attribute access."""
+        # Reset the cached graph instance to ensure fresh mocking
+        graph._graph = None
+
         with patch('backend.graph.get_graph', return_value=mock_neo4j_graph):
             schema = graph.get_schema
 
@@ -334,6 +340,9 @@ class TestGlobalGraphInstance:
     def test_global_graph_backwards_compatibility(self, mock_config, mock_neo4j_graph, sample_query_result):
         """Test backwards compatibility of global graph instance."""
         mock_neo4j_graph.query.return_value = sample_query_result
+
+        # Reset the cached graph instance to ensure fresh mocking
+        graph._graph = None
 
         with patch('backend.graph.get_graph', return_value=mock_neo4j_graph):
             # Test that existing code patterns still work

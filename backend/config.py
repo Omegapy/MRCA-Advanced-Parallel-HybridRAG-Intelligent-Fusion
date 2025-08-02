@@ -194,9 +194,32 @@ class BackendConfig(BaseSettings):
     server_timeout_keep_alive: int = Field(default=3600, description="Uvicorn keep-alive timeout - 1 hour for persistent sessions")
     server_timeout_graceful_shutdown: int = Field(default=30, description="Uvicorn graceful shutdown timeout")
     
-    # Health Check Configuration  
+    # Health Check Configuration
     health_check_interval: int = Field(default=30, description="Health check interval in seconds")
     health_check_timeout: int = Field(default=60, description="Health check timeout in seconds (increased for complex operations)")
+
+    def __str__(self) -> str:
+        """Custom string representation that hides sensitive information."""
+        # Get all field values
+        values = {}
+        for field_name, field_info in self.model_fields.items():
+            value = getattr(self, field_name)
+            # Hide sensitive fields
+            if any(sensitive in field_name.lower() for sensitive in ['password', 'key', 'secret']):
+                if value:
+                    values[field_name] = f"***{value[-4:]}" if len(str(value)) > 4 else "***"
+                else:
+                    values[field_name] = value
+            else:
+                values[field_name] = value
+
+        # Format as key=value pairs
+        field_strs = [f"{k}={v!r}" for k, v in values.items()]
+        return f"{self.__class__.__name__}({', '.join(field_strs)})"
+
+    def __repr__(self) -> str:
+        """Custom repr that uses the same logic as __str__."""
+        return self.__str__()
     
     # ---------------------------------------------------------------------------------
     

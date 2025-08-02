@@ -677,15 +677,22 @@ Query: {query}
             >>> print(f"Engine status: {health['engine_status']}")
         """
         logger.info("Checking parallel retrieval engine health...")
-        
-        # Check individual tool health
-        vector_health = check_vector_tool_health()
-        graph_health = check_cypher_tool_health()
-        
+
+        # Check individual tool health with exception handling
+        try:
+            vector_health = check_vector_tool_health()
+        except Exception as e:
+            vector_health = {"status": "unhealthy", "error": str(e)}
+
+        try:
+            graph_health = check_cypher_tool_health()
+        except Exception as e:
+            graph_health = {"status": "unhealthy", "error": str(e)}
+
         # Overall engine health
-        engine_healthy = (vector_health["status"] in ["healthy", "degraded"] or 
+        engine_healthy = (vector_health["status"] in ["healthy", "degraded"] or
                          graph_health["status"] in ["healthy", "degraded"])
-        
+
         return {
             "engine_status": "healthy" if engine_healthy else "error",
             "vector_tool": vector_health,

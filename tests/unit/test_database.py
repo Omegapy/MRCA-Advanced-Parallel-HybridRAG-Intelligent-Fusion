@@ -708,13 +708,17 @@ class TestFactoryFunctions:
         # Set up a mock database instance in the global variable
         mock_db = Mock()
 
-        with patch('backend.database._database_instance', mock_db):
-            reset_database_connection()
+        # Directly set the global instance (not using patch context manager)
+        import backend.database
+        backend.database._database_instance = mock_db
 
-            mock_db.disconnect.assert_called_once()
+        # Call reset function
+        reset_database_connection()
+
+        # Verify disconnect was called
+        mock_db.disconnect.assert_called_once()
 
         # After reset, global instance should be None
-        import backend.database
         assert backend.database._database_instance is None
 
 

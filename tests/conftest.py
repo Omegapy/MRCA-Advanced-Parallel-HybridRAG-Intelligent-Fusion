@@ -35,9 +35,45 @@ from typing import Dict, Any, Optional
 import time
 import requests
 from pathlib import Path
+import threading
 
 # Add backend to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
+
+# -------------------------------------------------------------------------
+# Rate Limiter for Integration Tests
+# -------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------- APIRateLimiter
+class APIRateLimiter:
+    """Simple rate limiter to prevent OpenAI API rate limit errors during integration tests."""
+
+    def __init__(self, requests_per_minute: int = 20):
+        """Initialize rate limiter.
+
+        Args:
+            requests_per_minute: Maximum requests allowed per minute
+        """
+        self.requests_per_minute = requests_per_minute
+        self.min_interval = 60.0 / requests_per_minute  # Minimum seconds between requests
+        self.last_request_time = 0.0
+        self.lock = threading.Lock()
+
+    def wait_if_needed(self):
+        """Wait if necessary to respect rate limits."""
+        with self.lock:
+            current_time = time.time()
+            time_since_last = current_time - self.last_request_time
+
+            if time_since_last < self.min_interval:
+                sleep_time = self.min_interval - time_since_last
+                time.sleep(sleep_time)
+
+            self.last_request_time = time.time()
+# ------------------------------------------------------------------------- end APIRateLimiter
+
+# Global rate limiter instance for integration tests
+_api_rate_limiter = APIRateLimiter(requests_per_minute=20)  # Conservative rate limit
 
 # Import testing constants
 from tests import (
@@ -47,37 +83,79 @@ from tests import (
 )
 
 # =========================================================================
+# Rate Limiting Fixtures
+# =========================================================================
+
+# ------------------------------------------------------------------------- api_rate_limit()
+@pytest.fixture(scope="function", autouse=True)
+def api_rate_limit(request):
+    """Automatically apply rate limiting to integration tests."""
+    # Only apply to integration tests
+    if "integration" in request.keywords:
+        _api_rate_limiter.wait_if_needed()
+# ------------------------------------------------------------------------- end api_rate_limit()
+
+# ------------------------------------------------------------------------- rate_limited_http_client()
+@pytest.fixture
+def rate_limited_http_client():
+    """HTTP client with automatic rate limiting for integration tests."""
+    import httpx
+
+    class RateLimitedClient:
+        def __init__(self):
+            self.client = httpx.AsyncClient(timeout=240.0)
+
+        async def post(self, *args, **kwargs):
+            """Rate-limited POST request."""
+            _api_rate_limiter.wait_if_needed()
+            return await self.client.post(*args, **kwargs)
+
+        async def get(self, *args, **kwargs):
+            """Rate-limited GET request."""
+            _api_rate_limiter.wait_if_needed()
+            return await self.client.get(*args, **kwargs)
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc_val, exc_tb):
+            await self.client.aclose()
+
+    return RateLimitedClient()
+# ------------------------------------------------------------------------- end rate_limited_http_client()
+
+# =========================================================================
 # Session-Level Fixtures
 # =========================================================================
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- event_loop()
 @pytest.fixture(scope="session")
 def event_loop():
     """Create an event loop for async tests."""
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end event_loop()
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- backend_url()
 @pytest.fixture(scope="session")
 def backend_url():
     """Backend API base URL for testing."""
     return "http://localhost:8000"
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end backend_url()
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- frontend_url()
 @pytest.fixture(scope="session")
 def frontend_url():
     """Frontend UI base URL for testing."""
     return "http://localhost:8501"
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end frontend_url()
 
 # =========================================================================
 # Mock Service Fixtures
 # =========================================================================
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- mock_neo4j_healthy()
 @pytest.fixture
 def mock_neo4j_healthy():
     """Mock healthy Neo4j connection."""
@@ -85,18 +163,18 @@ def mock_neo4j_healthy():
         mock_graph.query.return_value = [{"test": 1}]
         mock_graph.get_schema = Mock(return_value="Mock schema")
         yield mock_graph
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end mock_neo4j_healthy()
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- mock_neo4j_failing()
 @pytest.fixture
 def mock_neo4j_failing():
     """Mock failing Neo4j connection."""
     with patch('backend.graph.graph') as mock_graph:
         mock_graph.query.side_effect = Exception("Connection failed")
         yield mock_graph
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end mock_neo4j_failing()
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- mock_openai_healthy()
 @pytest.fixture
 def mock_openai_healthy():
     """Mock healthy OpenAI LLM connection."""
@@ -106,16 +184,16 @@ def mock_openai_healthy():
     with patch('backend.llm.get_llm') as mock_llm:
         mock_llm.return_value.invoke.return_value = mock_response
         yield mock_llm
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end mock_openai_healthy()
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- mock_openai_failing()
 @pytest.fixture
 def mock_openai_failing():
     """Mock failing OpenAI LLM connection."""
     with patch('backend.llm.get_llm') as mock_llm:
         mock_llm.return_value.invoke.side_effect = Exception("API key invalid")
         yield mock_llm
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end mock_openai_failing()
 
 # ---------------------------------------------------------------------------------
 @pytest.fixture
@@ -325,6 +403,8 @@ def production_test_caller():
         def call_vector_test(self):
             """Call the existing vector test function."""
             try:
+                # Apply rate limiting before API call
+                _api_rate_limiter.wait_if_needed()
                 from backend.tools.vector import test_vector_search
                 test_vector_search()
                 return True
@@ -347,6 +427,8 @@ def production_test_caller():
         async def call_fusion_test(self):
             """Call the existing context fusion test function."""
             try:
+                # Apply rate limiting before API call
+                _api_rate_limiter.wait_if_needed()
                 from backend.context_fusion import test_context_fusion
                 await test_context_fusion()
                 return True
@@ -358,8 +440,10 @@ def production_test_caller():
         async def call_parallel_test(self):
             """Call the existing parallel retrieval test function."""
             try:
-                from backend.parallel_hybrid import test_parallel_retrieval
-                await test_parallel_retrieval()
+                # Apply rate limiting before API call
+                _api_rate_limiter.wait_if_needed()
+                from backend.parallel_hybrid import validate_parallel_retrieval
+                await validate_parallel_retrieval()
                 return True
             except Exception as e:
                 return False, str(e)
@@ -417,13 +501,18 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(pytest.mark.reliability)
         elif "architecture" in str(item.fspath):
             item.add_marker(pytest.mark.architecture)
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- end pytest_collection_modifyitems()
 
-# ---------------------------------------------------------------------------------
+# ------------------------------------------------------------------------- setup_test_environment()
 @pytest.fixture(autouse=True)
 def setup_test_environment():
     """Automatically set up test environment for each test."""
     # Ensure clean state before each test
     os.environ.setdefault('TESTING', 'true')
     yield
-    # Cleanup after test if needed 
+    # Cleanup after test if needed
+# ------------------------------------------------------------------------- end setup_test_environment()
+
+# =========================================================================
+# End of File
+# ========================================================================= 

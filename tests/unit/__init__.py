@@ -53,7 +53,7 @@ individual components in isolation with comprehensive mock testing support.
 # =========================================================================
 
 # Unit test configuration
-UNIT_TEST_TIMEOUT = 30  # seconds for unit tests
+UNIT_TEST_TIMEOUT = 240  # seconds for unit tests (updated for LLM calls)
 MOCK_RESPONSE_DELAY = 0.1  # seconds for mock response simulation
 UNIT_TEST_ITERATIONS = 5  # default iterations for statistical validation
 

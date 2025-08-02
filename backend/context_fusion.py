@@ -338,6 +338,12 @@ class HybridContextFusion:
         else:
             dynamic_vector_weight = weights.vector_weight
             dynamic_graph_weight = weights.graph_weight
+
+        # Normalize contributions to sum to 1.0
+        total_weight = dynamic_vector_weight + dynamic_graph_weight
+        if total_weight > 0:
+            dynamic_vector_weight = dynamic_vector_weight / total_weight
+            dynamic_graph_weight = dynamic_graph_weight / total_weight
             
         # Create weighted combination
         fused_content = self._create_weighted_content(
@@ -861,6 +867,9 @@ def get_fusion_engine() -> HybridContextFusion:
 # ------------------------------------------------------------------------- end get_fusion_engine()
 
 # ------------------------------------------------------------------------- test_context_fusion()
+import pytest
+
+@pytest.mark.asyncio
 async def test_context_fusion():
     """Test the context fusion engine"""
     logger.info("Testing Advanced Context Fusion Engine...")

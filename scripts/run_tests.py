@@ -70,6 +70,7 @@ from dataclasses import dataclass, field
 # Configuration Classes
 # =========================================================================
 
+# ------------------------------------------------------------------------- TestConfig
 @dataclass
 class TestConfig:
     """Configuration for test execution."""
@@ -78,11 +79,13 @@ class TestConfig:
     junit_xml: bool = True
     fail_fast: bool = False
     max_failures: int = 10
-    timeout: int = 300  # 5 minutes default
+    timeout: int = 240  # 240 seconds default for LLM calls
     parallel: bool = False
     markers: List[str] = field(default_factory=list)
     output_dir: str = "test-results"
+# ------------------------------------------------------------------------- end TestConfig
 
+# ------------------------------------------------------------------------- TestResult
 @dataclass 
 class TestResult:
     """Results from test execution."""
@@ -94,14 +97,17 @@ class TestResult:
     passed_count: int = 0
     failed_count: int = 0
     output_file: Optional[str] = None
+# ------------------------------------------------------------------------- end TestResult
 
 # =========================================================================
 # Test Runner Class
 # =========================================================================
 
+# ------------------------------------------------------------------------- TestRunner
 class TestRunner:
     """Main test execution coordinator."""
     
+    # ------------------------------------------------------------------------- __init__()
     def __init__(self, config: TestConfig):
         """Initialize test runner with configuration.
         
@@ -118,46 +124,48 @@ class TestRunner:
                 "path": "tests/unit/",
                 "description": "Unit tests for individual components",
                 "markers": ["unit"],
-                "timeout": 120
+                "timeout": 240
             },
             "integration": {
-                "path": "tests/integration/", 
+                "path": "tests/integration/",
                 "description": "Integration tests for Module 6 test cases",
                 "markers": ["integration"],
-                "timeout": 300
+                "timeout": 240
             },
             "reliability": {
                 "path": "tests/reliability/",
                 "description": "Reliability and fault injection tests",
                 "markers": ["reliability"],
-                "timeout": 600
+                "timeout": 240
             },
             "architecture": {
                 "path": "tests/architecture/",
                 "description": "Architecture and confidence tests",
                 "markers": ["architecture"],
-                "timeout": 300
+                "timeout": 240
             },
             "e2e": {
                 "path": "tests/e2e/",
                 "description": "End-to-end workflow tests",
                 "markers": ["e2e", "requires_api"],
-                "timeout": 900
+                "timeout": 240
             },
             "fast": {
                 "path": "tests/unit/ tests/integration/",
                 "description": "Fast test suite (unit + basic integration)",
                 "markers": ["not slow"],
-                "timeout": 180
+                "timeout": 240
             },
             "all": {
                 "path": "tests/",
                 "description": "Complete test suite",
                 "markers": [],
-                "timeout": 1800
+                "timeout": 240
             }
         }
+    # ------------------------------------------------------------------------- end __init__()
     
+    # ------------------------------------------------------------------------- build_pytest_command()
     def build_pytest_command(self, category: str) -> List[str]:
         """Build pytest command for specified category.
         
@@ -215,7 +223,9 @@ class TestRunner:
         cmd.append("--tb=short")
         
         return cmd
+    # ------------------------------------------------------------------------- end build_pytest_command()
     
+    # ------------------------------------------------------------------------- run_category()
     def run_category(self, category: str) -> TestResult:
         """Run tests for a specific category.
         
@@ -226,7 +236,7 @@ class TestRunner:
             TestResult with execution details
         """
         print(f"\n{'='*60}")
-        print(f"🧪 Running {category.upper()} Tests")
+        print(f"Running {category.upper()} Tests")
         print(f"{'='*60}")
         print(f"Description: {self.test_categories[category]['description']}")
         
@@ -279,7 +289,9 @@ class TestRunner:
                 exit_code=-1,
                 duration=duration
             )
+    # ------------------------------------------------------------------------- end run_category()
     
+    # ------------------------------------------------------------------------- run_categories()
     def run_categories(self, categories: List[str]) -> List[TestResult]:
         """Run multiple test categories.
         
@@ -306,7 +318,9 @@ class TestRunner:
                 break
         
         return results
+    # ------------------------------------------------------------------------- end run_categories()
     
+    # ------------------------------------------------------------------------- generate_summary()
     def generate_summary(self, results: List[TestResult]) -> None:
         """Generate and display test summary.
         
@@ -314,7 +328,7 @@ class TestRunner:
             results: List of TestResult objects to summarize
         """
         print(f"\n{'='*60}")
-        print("📊 TEST EXECUTION SUMMARY")
+        print("TEST EXECUTION SUMMARY")
         print(f"{'='*60}")
         
         total_duration = sum(r.duration for r in results)
@@ -336,13 +350,13 @@ class TestRunner:
         
         # Coverage information
         if self.config.coverage:
-            print("📈 Coverage reports generated:")
+            print("Coverage reports generated:")
             print("  - coverage.xml (for CI/CD)")
             print("  - Terminal output (above)")
             
         # JUnit XML information  
         if self.config.junit_xml:
-            print("📄 JUnit XML reports:")
+            print("JUnit XML reports:")
             for result in results:
                 if result.output_file:
                     print(f"  - {result.output_file}")
@@ -351,17 +365,20 @@ class TestRunner:
         
         # Final status
         if all(r.success for r in results):
-            print("🎉 ALL TESTS PASSED!")
+            print("✅ ALL TESTS PASSED!")
             return True
         else:
-            print("💥 SOME TESTS FAILED!")
+            print("⚠️ SOME TESTS FAILED!")
             print("Check the output above for details.")
             return False
+    # ------------------------------------------------------------------------- end generate_summary()
+# ------------------------------------------------------------------------- end TestRunner
 
 # =========================================================================
 # CLI Interface Functions
 # =========================================================================
 
+# ------------------------------------------------------------------------- create_parser()
 def create_parser() -> argparse.ArgumentParser:
     """Create command-line argument parser.
     
@@ -448,7 +465,9 @@ Examples:
     )
     
     return parser
+# ------------------------------------------------------------------------- end create_parser()
 
+# ------------------------------------------------------------------------- main()
 def main() -> int:
     """Main entry point for test runner.
     
@@ -483,7 +502,7 @@ def main() -> int:
         return 1
     
     # Run tests
-    print("🚀 MRCA Advanced Parallel Hybrid Test Runner")
+    print("MRCA Advanced Parallel Hybrid Test Runner")
     print(f"Categories: {', '.join(args.categories)}")
     print(f"Configuration: {config}")
     
@@ -491,6 +510,7 @@ def main() -> int:
     success = runner.generate_summary(results)
     
     return 0 if success else 1
+# ------------------------------------------------------------------------- end main()
 
 # =========================================================================
 # Entry Point

@@ -30,7 +30,7 @@ user workflows through the MRCA Advanced Parallel Hybrid system.
 # =========================================================================
 
 # Test configuration constants
-E2E_TEST_TIMEOUT = 120  # seconds
+E2E_TEST_TIMEOUT = 240  # seconds (updated for LLM calls)
 DEFAULT_BASE_URL = "http://localhost:8000"
 DEFAULT_FRONTEND_URL = "http://localhost:8501"
 

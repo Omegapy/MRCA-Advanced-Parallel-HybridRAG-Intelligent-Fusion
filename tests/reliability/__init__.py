@@ -53,7 +53,7 @@ system resilience, fault tolerance, and performance under degraded conditions.
 # =========================================================================
 
 # Reliability test configuration
-RELIABILITY_TEST_TIMEOUT = 120  # seconds for reliability tests
+RELIABILITY_TEST_TIMEOUT = 240  # seconds for reliability tests (updated for LLM calls)
 FAULT_INJECTION_PROBABILITY = 0.3  # default fault injection rate
 LOAD_TEST_DURATION = 30  # seconds for load testing scenarios
 CIRCUIT_BREAKER_TEST_THRESHOLD = 3  # failures to trigger circuit breaker

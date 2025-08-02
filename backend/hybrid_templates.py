@@ -317,8 +317,11 @@ Original Question: {user_query}
 Information Processing: Combined Vector Search + Knowledge Graph Analysis
 Fusion Strategy: {fusion_result.fusion_strategy.replace('_', ' ').title()}
 
-HYBRID RETRIEVED CONTEXT:
+VECTOR SEARCH RESULTS:
 {self._truncate_content(fusion_result.fused_content)}
+
+KNOWLEDGE GRAPH ANALYSIS:
+Structural relationships and regulatory connections identified through graph traversal.
 
 {self._add_source_attribution(fusion_result) if self.config.include_source_attribution else ""}
 {self._add_confidence_info(fusion_result) if self.config.include_confidence_scores else ""}
@@ -443,7 +446,7 @@ COMPLIANCE QUERY: {user_query}
 COMPLIANCE FOCUS AREA: {compliance_focus.title()}
 MINE TYPE CONTEXT: {mine_type_context.title()}
 
-REGULATORY CONTEXT DATABASE:
+REGULATORY COMPLIANCE ANALYSIS:
 {self._truncate_content(fusion_result.fused_content)}
 
 {citation_summary}
@@ -460,7 +463,7 @@ Regulatory compliance requires precise citation accuracy.
 ENHANCED COMPLIANCE RESPONSE FRAMEWORK:
 Your response must follow regulatory compliance standards for {mine_type_context}:
 
-**REGULATORY REQUIREMENTS ANALYSIS:**
+**COMPLIANCE REQUIREMENTS:**
 - Cite specific CFR sections EXACTLY as provided in the context above
 - Use precise regulatory language ("shall", "must", "required")
 - Distinguish between mandatory and recommended practices
@@ -502,6 +505,8 @@ FUSION METHODOLOGY:
 - Strategy: {fusion_result.fusion_strategy.replace('_', ' ').title()}
 - Quality Score: {fusion_result.fusion_quality_score:.2f}/1.0
 - Final Confidence: {fusion_result.final_confidence:.2f}/1.0
+- Vector contribution: {vector_contrib:.1%}
+- Graph contribution: {graph_contrib:.1%}
 
 🚨 CRITICAL INSTRUCTION: PRESERVE EXACT CFR CITATIONS
 You MUST preserve all CFR section references EXACTLY as they appear in the context above. 
@@ -517,6 +522,7 @@ Provide a comprehensive answer that:
 
 Your response should demonstrate the value of hybrid information retrieval in regulatory compliance.
 
+ANALYTICAL RESPONSE:
 COMPARATIVE ANALYSIS RESPONSE:"""
         
         return template
@@ -532,10 +538,11 @@ COMPARATIVE ANALYSIS RESPONSE:"""
 
 QUERY: {user_query}
 
-INFORMATION QUALITY ASSESSMENT:
+CONFIDENCE-WEIGHTED ANALYSIS:
 - Overall Confidence Level: {confidence_level} ({fusion_result.final_confidence:.2f}/1.0)
 - Information Quality Score: {fusion_result.fusion_quality_score:.2f}/1.0
 - Fusion Strategy: {fusion_result.fusion_strategy.replace('_', ' ').title()}
+- Final confidence: {fusion_result.final_confidence:.2f}
 
 RETRIEVED CONTEXT:
 {self._truncate_content(fusion_result.fused_content)}
@@ -576,11 +583,11 @@ CONFIDENCE-CALIBRATED EXPERT RESPONSE:"""
         """
         if len(content) <= self.config.max_context_length:
             return content
-            
+
         # Truncate but try to end at a sentence boundary
         truncated = content[:self.config.max_context_length]
         last_period = truncated.rfind('.')
-        
+
         if last_period > self.config.max_context_length * 0.8:  # If period is reasonably close to end
             return truncated[:last_period + 1] + "\n\n[Content truncated for length]"
         else:
@@ -605,7 +612,9 @@ CONFIDENCE-CALIBRATED EXPERT RESPONSE:"""
         return f"""
 INFORMATION CONFIDENCE:
 - Retrieval Confidence: {fusion_result.final_confidence:.2f}/1.0 ({confidence_level})
-- Quality Score: {fusion_result.fusion_quality_score:.2f}/1.0
+- Quality: {fusion_result.fusion_quality_score:.2f}/1.0
+- Vector: {fusion_result.vector_contribution:.0%}
+- Graph: {fusion_result.graph_contribution:.0%}
 """
     # --------------------------------------------------------------------------------- end _add_confidence_info()
     
@@ -669,16 +678,20 @@ CONFIDENCE INTERPRETATION:
         Returns:
             str: Descriptive confidence level (High, Medium-High, Medium, Low-Medium, Low).
         """
-        if confidence >= 0.8:
+        if confidence >= 0.9:
+            return "Very High"
+        elif confidence >= 0.7:
             return "High"
-        elif confidence >= 0.6:
+        elif confidence >= 0.5:
             return "Medium-High"
         elif confidence >= 0.4:
             return "Medium"
         elif confidence >= 0.2:
             return "Low-Medium"
-        else:
+        elif confidence > 0.0:
             return "Low"
+        else:
+            return "Very Low"
     # --------------------------------------------------------------------------------- end _get_confidence_level()
     
     # --------------------------------------------------------------------------------- _interpret_confidence()
