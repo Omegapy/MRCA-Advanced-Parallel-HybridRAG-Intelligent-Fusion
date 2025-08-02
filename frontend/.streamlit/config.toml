@@ -18,14 +18,15 @@ textColor = "#fafafa"
 font = "sans serif"
 
 [server]
-# Server configuration for production deployment
+headless = true
 port = 8501
-enableXsrfProtection = true
+address = "0.0.0.0"
 maxUploadSize = 50
 
 [browser]
-# Browser behavior
+serverAddress = "0.0.0.0"
 gatherUsageStats = false
+serverPort = 8501
 
 [client]
 # Client-side configuration
@@ -34,3 +35,6 @@ toolbarMode = "viewer"
 [logger]
 # Logging configuration
 level = "info" 
+
+[global]
+developmentMode = false 

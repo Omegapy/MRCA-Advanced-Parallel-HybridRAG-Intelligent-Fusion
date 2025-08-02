@@ -125,15 +125,11 @@ services:
       - MRCA_SESSION_TIMEOUT=86400              # Session timeout - 24 hours for long-running sessions
       - MRCA_HEALTH_CHECK_TIMEOUT=60            # Health check timeout for complex operations
       
-      # Neo4j Aura Cloud database configuration
-      # Note: These credentials should be moved to secrets in production
-      - NEO4J_URI=neo4j+s://baf9dbcb.databases.neo4j.io    # Aura connection string
-      - NEO4J_USERNAME=neo4j                               # Database username
-      - NEO4J_PASSWORD=71-twxE7preNt3s1B8O3JPbs10fans9X_eHEN5djSBg  # Database password
-      
-      # API key configuration (loaded from secrets file)
-      # - OPENAI_API_KEY=${OPENAI_API_KEY}      # OpenAI API key for LLM operations
-      # - GEMINI_API_KEY=${GEMINI_API_KEY}      # Google Gemini API key for LLM operations
+      # Secrets Configuration - All sensitive credentials loaded from .streamlit/secrets.toml
+      # Neo4j Aura Cloud database configuration (loaded from secrets file)
+      # OpenAI API configuration (loaded from secrets file)
+      # Google Gemini API configuration (loaded from secrets file)
+      # Backend automatically loads these via update_from_secrets() during initialization
     
     # Service dependencies (disabled - using cloud database)
     # depends_on:
@@ -255,7 +251,7 @@ secrets:
 #     - Frontend:       http://localhost:8501/_stcore/health
 #
 # Database Configuration:
-#   Neo4j Aura:        Configured via environment variables
+#   Neo4j Aura:        Configured via .streamlit/secrets.toml (secure secrets mounting)
 #   Local Database:    Uncomment database service section if needed
 #
 # Troubleshooting:
